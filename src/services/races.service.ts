@@ -15,13 +15,19 @@ export class RacesService {
 
   async findRace(id: string): Promise<Race> {
     const { data } = await firstValueFrom(
-      this.httpService.get<Race>(this.dnd_api_url + id).pipe(
+      this.httpService.get(this.dnd_api_url + id).pipe(
         catchError((error: AxiosError) => {
           this.logger.error(error.response.data);
           throw 'An error happened!';
         }),
       ),
     );
-    return data;
+    const race = {
+      ...data,
+      starting_proficiency_options_desc: data.starting_proficiency_options?.desc ?? 'no proficiency options available for this race',
+      starting_proficiency_options_choose: data.starting_proficiency_options?.choose ?? 0,
+      starting_proficiency_options: data.starting_proficiency_options ? data.starting_proficiency_options.from.options.map(element => element.item) : [],
+    };
+    return race;
   }
 }
