@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './modules/users.module';
 import * as dotenv from 'dotenv';
 import { MulterModule } from '@nestjs/platform-express';
+import { RacesModule } from './modules/races.module';
 
 dotenv.config();
 
@@ -25,6 +26,7 @@ dotenv.config();
       autoLoadEntities: true,
     }),
     UsersModule,
+    RacesModule,
     MulterModule.register({
       dest: './files',
     })
