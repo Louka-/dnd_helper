@@ -43,11 +43,8 @@ export class Race {
   @Column()
   starting_proficiency_options_choose: number;
 
-  @Column()
-  starting_proficiency_options_type: string;
-
-  @Column('json')
-  starting_proficiency_options_from: any; // To store options
+  @OneToMany(() => Proficiency, (proficiency) => proficiency.id)
+  starting_proficiency_options: Proficiency[];
 
   @OneToMany(() => Language, (language) => language.id)
   languages: Language[];
