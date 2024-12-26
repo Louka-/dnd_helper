@@ -2,19 +2,19 @@ import { Injectable, Logger } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { catchError, firstValueFrom } from 'rxjs';
 import { AxiosError } from 'axios';
-import { Race } from 'src/entities/race.entity';
-import RacesUtils from 'src/utils/races.utils';
+import { Class } from 'src/entities/class.entity';
+import ClassesUtils from 'src/utils/classes.utils';
 
 @Injectable()
-export class RacesService {
-  private readonly logger = new Logger(RacesService.name);
+export class ClassesService {
+  private readonly logger = new Logger(ClassesService.name);
   constructor(
     private readonly httpService: HttpService,
   ) { }
 
-  dnd_api_url = "https://www.dnd5eapi.co/api/races/";
+  dnd_api_url = "https://www.dnd5eapi.co/api/classes/";
 
-  async findRace(id: string): Promise<Race> {
+  async findClass(id: string): Promise<Class> {
     const { data } = await firstValueFrom(
       this.httpService.get(this.dnd_api_url + id).pipe(
         catchError((error: AxiosError) => {
@@ -23,6 +23,6 @@ export class RacesService {
         }),
       ),
     );
-    return RacesUtils.mapRaceFromApi(data);
+    return ClassesUtils.mapClassFromApi(data);
   }
 }
