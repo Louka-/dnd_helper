@@ -5,6 +5,7 @@ import { UsersModule } from './modules/users.module';
 import * as dotenv from 'dotenv';
 import { MulterModule } from '@nestjs/platform-express';
 import { RacesModule } from './modules/races.module';
+import { ClassesModule } from './modules/classes.module';
 
 dotenv.config();
 
@@ -25,8 +26,9 @@ dotenv.config();
       synchronize: false,
       autoLoadEntities: true,
     }),
-    UsersModule,
+    ClassesModule,
     RacesModule,
+    UsersModule,
     MulterModule.register({
       dest: './files',
     })

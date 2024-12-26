@@ -4,7 +4,7 @@ import { AbilityScore } from "./ability-score.entity";
 @Entity('ability_bonus')
 export class AbilityBonus {
   @PrimaryGeneratedColumn()
-  id: number;
+  id?: number;
 
   @ManyToOne(() => AbilityScore)
   ability_score: AbilityScore;

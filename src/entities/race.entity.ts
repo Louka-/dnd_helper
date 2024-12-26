@@ -1,16 +1,16 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import { Entity, Column, ManyToOne, PrimaryColumn, OneToOne } from "typeorm";
 import { Trait } from "./trait.entity";
 import { Language } from "./language.entity";
 import { Subrace } from "./subrace.entity";
 import { Proficiency } from "./proficiency.entity";
 import { AbilityBonus } from "./ability-bonus.entity";
+import { ProficienciesOption } from "./proficiencies-option.entity";
+import { LanguageOption } from "./language-option.entity";
+import { AbilityBonusOption } from "./ability-bonus-option.entity";
 
 @Entity('race')
 export class Race {
-  @PrimaryGeneratedColumn()
-  id: number;
-
-  @Column()
+  @PrimaryColumn()
   index: string;
 
   @Column()
@@ -19,8 +19,11 @@ export class Race {
   @Column()
   speed: number;
 
-  @OneToMany(() => AbilityBonus, (abilityBonus) => abilityBonus.id)
+  @ManyToOne(() => AbilityBonus, (abilityBonus) => abilityBonus.id)
   ability_bonuses: AbilityBonus[];
+
+  @OneToOne(() => AbilityBonusOption, (abilityBonusOption) => abilityBonusOption.id)
+  ability_bonus_options?: AbilityBonusOption;
 
   @Column()
   alignment: string;
@@ -34,28 +37,25 @@ export class Race {
   @Column()
   size_description: string;
 
-  @OneToMany(() => Proficiency, (proficiency) => proficiency.id)
+  @ManyToOne(() => Proficiency, (proficiency) => proficiency.index)
   starting_proficiencies: Proficiency[];
 
-  @Column()
-  starting_proficiency_options_desc: string;
+  @OneToOne(() => ProficienciesOption, (proficiencyOption) => proficiencyOption.id)
+  starting_proficiency_options?: ProficienciesOption;
 
-  @Column()
-  starting_proficiency_options_choose: number;
-
-  @OneToMany(() => Proficiency, (proficiency) => proficiency.id)
-  starting_proficiency_options: Proficiency[];
-
-  @OneToMany(() => Language, (language) => language.id)
+  @ManyToOne(() => Language, (language) => language.index)
   languages: Language[];
+
+  @OneToOne(() => LanguageOption, (languageOption) => languageOption.id)
+  language_options?: LanguageOption;
 
   @Column()
   language_desc: string;
 
-  @OneToMany(() => Trait, (trait) => trait.id)
+  @ManyToOne(() => Trait, (trait) => trait.index)
   traits: Trait[];
 
-  @OneToMany(() => Subrace, (subrace) => subrace.id)
+  @ManyToOne(() => Subrace, (subrace) => subrace.index)
   subraces: Subrace[];
 
   @Column()
