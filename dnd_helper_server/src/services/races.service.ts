@@ -14,7 +14,7 @@ export class RacesService {
 
   dnd_api_url = "https://www.dnd5eapi.co/api/races/";
 
-  async findRace(id: string): Promise<Race> {
+  async findRaceById(id: string): Promise<Race> {
     const { data } = await firstValueFrom(
       this.httpService.get(this.dnd_api_url + id).pipe(
         catchError((error: AxiosError) => {
@@ -24,5 +24,17 @@ export class RacesService {
       ),
     );
     return RacesUtils.mapRaceFromApi(data);
+  }
+
+  async findAllRaces(): Promise<Race[]> {
+    const { data } = await firstValueFrom(
+      this.httpService.get(this.dnd_api_url).pipe(
+        catchError((error: AxiosError) => {
+          this.logger.error(error.response.data);
+          throw 'An error happened!';
+        }),
+      ),
+    );
+    return data.results;
   }
 }

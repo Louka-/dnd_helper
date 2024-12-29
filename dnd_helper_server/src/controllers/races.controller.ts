@@ -9,10 +9,15 @@ export class RacesController {
   constructor(private raceService: RacesService) { }
 
   @Get('one/:id')
-  getRace(
+  getRaceById(
     @Param('id') id: string
   ) {
-    return this.raceService.findRace(id);
+    return this.raceService.findRaceById(id);
+  }
+
+  @Get('all')
+  getAllRaces() {
+    return this.raceService.findAllRaces();
   }
 
 }
