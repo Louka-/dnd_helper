@@ -1,18 +1,20 @@
+@let races = races$ | async;
+@let raceDetails = raceDetails$ | async;
 <mat-form-field>
-  <mat-label>Favorite food</mat-label>
+  <mat-label>Races</mat-label>
   <mat-select [(value)]="selectedRace" (selectionChange)="getRaceById()">
-    @for (food of races; track food) {
-    <mat-option [value]="food.index">{{food.name}}</mat-option>
+    @for (race of races; track race) {
+    <mat-option [value]="race.index">{{race.name}}</mat-option>
     }
   </mat-select>
 </mat-form-field>
 
 <div>
-  {{race.name}}
+  {{raceDetails?.name}}
 
-  {{race.starting_proficiency_options?.choose}}
-  {{race.starting_proficiency_options?.description}}
-  @for (option of race.starting_proficiency_options?.options; track option) {
+  {{raceDetails?.starting_proficiency_options?.choose}}
+  {{raceDetails?.starting_proficiency_options?.description}}
+  @for (option of raceDetails?.starting_proficiency_options?.options; track option) {
   {{option.name}}
   }
 
