@@ -4,7 +4,7 @@ export interface Proficiency {
   url: string;
 }
 
-export interface StartingProficiency {
+export interface ProficienciesChoice {
   choose: number;
   description: string;
   options: Proficiency[];

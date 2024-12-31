@@ -12,7 +12,13 @@ export class ClassesController {
   getRace(
     @Param('id') id: string
   ) {
-    return this.classService.findClass(id);
+    return this.classService.findClassById(id);
+  }
+
+
+  @Get('all')
+  getAllRaces() {
+    return this.classService.findAllClasses();
   }
 
 }
