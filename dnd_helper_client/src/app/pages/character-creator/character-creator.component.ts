@@ -1,48 +1,36 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
-import { RaceService } from '../../services/race.service';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { map, Observable, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Race, RaceDetails } from '../../models/race.model';
+import { Store } from '@ngrx/store';
+import { racesActions } from '../../store/race-state/race.actions';
+import { selectAllRaces, selectRaceById } from '../../store/race-state/race.selectors';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'character-creator',
   standalone: true,
-  imports: [MatFormFieldModule, MatSelectModule, MatInputModule],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [CommonModule, MatFormFieldModule, MatSelectModule, MatInputModule],
   templateUrl: './character-creator.component.html',
   styleUrl: './character-creator.component.scss'
 })
 export class CharacterCreatorComponent implements OnInit {
 
-  races: Race[] = [];
+  private store = inject(Store)
+  races$: Observable<Race[]> = this.store.select(selectAllRaces);
   selectedRace = '';
-  race: RaceDetails = {
-    starting_proficiency_options: {
-      choose: 0,
-      description: 'truc',
-      options: [{
-        index: 'truc', name: 'truc', url: 'truc'
-      }]
-    }
-  } as RaceDetails;
+  raceDetails$!: Observable<RaceDetails>;
 
-  constructor(
-    private raceService: RaceService,
-  ) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.raceService.getAllRaces().pipe(
-      map(allRaces => allRaces.forEach(r => this.races.push(r)))
-    ).subscribe();
+    this.store.dispatch(racesActions.getAllRaces());
   }
 
   getRaceById(): void {
-    console.log(this.selectedRace)
-    this.raceService.getRaceById(this.selectedRace).pipe(
-      map(result => this.race = result),
-      map(data => console.log(data))
-    ).subscribe();
+    this.store.dispatch(racesActions.getRaceById({ index: this.selectedRace }));
+    this.raceDetails$ = this.store.select(selectRaceById(this.selectedRace)) as Observable<RaceDetails>
   }
 }
