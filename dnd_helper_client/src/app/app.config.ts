@@ -10,6 +10,8 @@ import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideEffects } from '@ngrx/effects';
 import { RaceEffects } from './store/race-state/race.effects';
 import { raceReducer } from './store/race-state/race.reducer';
+import { classReducer } from './store/class-state/class.reducer';
+import { ClassEffects } from './store/class-state/class.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -19,9 +21,13 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(withEventReplay()),
     provideAnimationsAsync(),
     provideStore({
-      races: raceReducer
+      races: raceReducer,
+      classes: classReducer,
     }),
-    provideEffects(RaceEffects),
+    provideEffects(
+      RaceEffects,
+      ClassEffects
+    ),
     provideStoreDevtools(),
   ]
 };

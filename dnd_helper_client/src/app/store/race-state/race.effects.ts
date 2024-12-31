@@ -4,7 +4,7 @@ import { catchError, map, switchMap } from 'rxjs/operators';
 import { RaceService } from '../../services/race.service';
 import { racesActions } from './race.actions'
 import { select, Store } from '@ngrx/store';
-import { selectRaceById, selectRaceDetails } from './race.selectors';
+import { selectRaceById } from './race.selectors';
 import { of } from 'rxjs';
 
 @Injectable()
@@ -41,7 +41,4 @@ export class RaceEffects {
     )
   }
   );
-
 }
-
-

@@ -17,7 +17,7 @@ export default class ClassesUtils {
   }
 
   static mapStartingEquipmentFromApi(data: any): Equipment[] {
-    if (data) {
+    if (data.length) {
       return data.map(element => ({
         index: element.equipment.index,
         name: element.equipment.name,
@@ -51,12 +51,24 @@ export default class ClassesUtils {
               quantity: item.count
             };
           case 'multiple':
-            return item.items.map(it => ({
-              index: it.of.index,
-              name: it.of.name,
-              url: it.of.url,
-              quantity: it.count
-            }));
+            return item.items.map(it => {
+              if (it.option_type === 'counted_reference') {
+                return {
+                  index: it.of.index,
+                  name: it.of.name,
+                  url: it.of.url,
+                  quantity: it.count
+                }
+              }
+              if (it.option_type === 'choice') {
+                return {
+                  index: it.choice.from.equipment_category.index,
+                  name: it.choice.from.equipment_category.name,
+                  url: it.choice.from.equipment_category.url,
+                  quantity: it.choice.choose
+                }
+              }
+            });
           case 'choice':
             return {
               index: item.choice.from.equipment_category.index,
@@ -68,6 +80,13 @@ export default class ClassesUtils {
             break;
         }
       })
+    } else if (!data.from.options && data.from) {
+      return [{
+        index: data.from.equipment_category.index,
+        name: data.from.equipment_category.name,
+        url: data.from.equipment_category.url,
+        quantity: data.choose
+      }];
     }
     return [];
   }
