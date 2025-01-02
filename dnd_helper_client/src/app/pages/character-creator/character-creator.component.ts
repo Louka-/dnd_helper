@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { Observable } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { Race, RaceDetails } from '../../models/race.model';
 import { Store } from '@ngrx/store';
 import { racesActions } from '../../store/race-state/race.actions';
@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
 import { classesActions } from '../../store/class-state/class.actions';
 import { Class, ClassDetails } from '../../models/class.model';
 import { selectAllClasses, selectClassById } from '../../store/class-state/class.selectors';
+import { Subrace } from '../../models/subrace.model';
 
 @Component({
   selector: 'character-creator',
@@ -27,6 +28,7 @@ export class CharacterCreatorComponent implements OnInit {
   selectedRace = '';
   selectedClass = '';
   raceDetails$!: Observable<RaceDetails>;
+  subraces$!: Observable<Subrace[]>;
   classDetails$!: Observable<ClassDetails>;
 
   constructor() { }

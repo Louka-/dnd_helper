@@ -6,6 +6,7 @@ import * as dotenv from 'dotenv';
 import { MulterModule } from '@nestjs/platform-express';
 import { RacesModule } from './modules/races.module';
 import { ClassesModule } from './modules/classes.module';
+import { SubracesModule } from './modules/subraces.module';
 
 dotenv.config();
 
@@ -28,6 +29,7 @@ dotenv.config();
     }),
     ClassesModule,
     RacesModule,
+    SubracesModule,
     UsersModule,
     MulterModule.register({
       dest: './files',
