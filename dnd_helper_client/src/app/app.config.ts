@@ -26,7 +26,7 @@ export const appConfig: ApplicationConfig = {
     }),
     provideEffects(
       RaceEffects,
-      ClassEffects
+      ClassEffects,
     ),
     provideStoreDevtools(),
   ]

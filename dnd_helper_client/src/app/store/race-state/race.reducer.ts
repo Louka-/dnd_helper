@@ -1,15 +1,18 @@
 import { createReducer, on } from '@ngrx/store';
 import { racesActions } from './race.actions';
 import { Race, RaceDetails } from '../../models/race.model';
+import { Subrace } from '../../models/subrace.model';
 
 export interface State {
   races: Race[];
   raceDetails: RaceDetails[];
+  subraces: Subrace[];
 };
 
 export const initialState: State = {
   races: [],
   raceDetails: [],
+  subraces: [],
 };
 
 export const raceReducer = createReducer(
@@ -23,5 +26,7 @@ export const raceReducer = createReducer(
         ? state.raceDetails
         : [...state.raceDetails, raceDetails]
   })),
+  on(racesActions.getSubraceById, (state) => ({ ...state })),
+  on(racesActions.getSubraceSuccess, (state, { subraces }) => ({ ...state, subraces })),
 );
 

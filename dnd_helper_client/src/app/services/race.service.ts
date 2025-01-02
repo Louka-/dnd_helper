@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Race, RaceDetails } from '../models/race.model';
 
 const API_RACES = 'http://localhost:3000/races';

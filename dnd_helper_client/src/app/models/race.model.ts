@@ -1,6 +1,7 @@
 import { AbilityBonus } from "./ability-bonus.model";
 import { Language } from "./language.model";
 import { Proficiency, ProficienciesChoice } from "./proficiency.model";
+import { Subrace } from "./subrace.model";
 import { Trait } from "./trait.model";
 
 export interface Race {
@@ -21,6 +22,6 @@ export interface RaceDetails extends Race {
   speed: number;
   starting_proficiencies?: Proficiency[];
   starting_proficiency_options?: ProficienciesChoice;
-  subraces?: Race[];
+  subraces?: Subrace[];
   traits: Trait[];
 }
