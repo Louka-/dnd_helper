@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
 import { Language } from "./language.entity";
 
 @Entity('language_option')
@@ -9,6 +9,6 @@ export class LanguageOption {
   @Column()
   choose: number;
 
-  @ManyToOne(() => Language, (language) => language.index)
+  @Column()
   options: Language[];
 }

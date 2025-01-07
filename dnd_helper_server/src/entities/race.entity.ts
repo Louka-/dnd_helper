@@ -1,4 +1,4 @@
-import { Entity, Column, ManyToOne, PrimaryColumn, OneToOne } from "typeorm";
+import { Entity, Column, PrimaryColumn } from "typeorm";
 import { Trait } from "./trait.entity";
 import { Language } from "./language.entity";
 import { Subrace } from "./subrace.entity";
@@ -19,10 +19,10 @@ export class Race {
   @Column()
   speed: number;
 
-  @ManyToOne(() => AbilityBonus, (abilityBonus) => abilityBonus.id)
+  @Column()
   ability_bonuses: AbilityBonus[];
 
-  @OneToOne(() => AbilityBonusOption, (abilityBonusOption) => abilityBonusOption.id)
+  @Column()
   ability_bonus_options?: AbilityBonusOption;
 
   @Column()
@@ -37,25 +37,25 @@ export class Race {
   @Column()
   size_description: string;
 
-  @ManyToOne(() => Proficiency, (proficiency) => proficiency.index)
+  @Column()
   starting_proficiencies: Proficiency[];
 
-  @OneToOne(() => ProficienciesOption, (proficiencyOption) => proficiencyOption.id)
+  @Column()
   starting_proficiency_options?: ProficienciesOption;
 
-  @ManyToOne(() => Language, (language) => language.index)
+  @Column()
   languages: Language[];
 
-  @OneToOne(() => LanguageOption, (languageOption) => languageOption.id)
+  @Column()
   language_options?: LanguageOption;
 
   @Column()
   language_desc: string;
 
-  @ManyToOne(() => Trait, (trait) => trait.index)
+  @Column()
   traits: Trait[];
 
-  @ManyToOne(() => Subrace, (subrace) => subrace.index)
+  @Column()
   subraces: Subrace[];
 
   @Column()

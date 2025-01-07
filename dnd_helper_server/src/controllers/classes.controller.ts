@@ -9,7 +9,7 @@ export class ClassesController {
   constructor(private classService: ClassesService) { }
 
   @Get('one/:id')
-  getRace(
+  getClassById(
     @Param('id') id: string
   ) {
     return this.classService.findClassById(id);
@@ -17,7 +17,7 @@ export class ClassesController {
 
 
   @Get('all')
-  getAllRaces() {
+  getAllClasses() {
     return this.classService.findAllClasses();
   }
 

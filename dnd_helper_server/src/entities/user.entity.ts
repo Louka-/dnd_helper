@@ -1,7 +1,8 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { Timestamp } from 'src/generics/timestamp.entity';
+import { Characters } from './character.entity';
 
-@Entity('user')
+@Entity('users')
 export class Users extends Timestamp {
   @PrimaryGeneratedColumn()
   id: number;
@@ -17,4 +18,7 @@ export class Users extends Timestamp {
 
   @Column({ type: 'date', nullable: true, name: 'refreshtokenexp' })
   refreshTokenExp: string;
+
+  @OneToMany(() => Characters, (character) => character.users, { nullable: true, eager: true })
+  characters?: Characters[];
 }
