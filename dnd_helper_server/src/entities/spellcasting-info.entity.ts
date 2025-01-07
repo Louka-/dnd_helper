@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 import { Spellcasting } from "./spellcasting.entity";
 
 @Entity('spellcasting_info')
@@ -12,6 +12,6 @@ export class SpellcastingInfo {
   @Column("text", { array: true })
   desc: string;
 
-  @ManyToOne(() => Spellcasting, spellcasting => spellcasting.info)
+  @Column()
   spellcasting: Spellcasting;
 }

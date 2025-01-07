@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 import { AbilityScore } from "./ability-score.entity";
 import { SpellcastingInfo } from "./spellcasting-info.entity";
 
@@ -10,9 +10,9 @@ export class Spellcasting {
   @Column()
   level: number;
 
-  @ManyToOne(() => AbilityScore, abilityScore => abilityScore.index)
+  @Column()
   spellcastingAbility: AbilityScore;
 
-  @ManyToOne(() => SpellcastingInfo, info => info.spellcasting)
+  @Column()
   info: SpellcastingInfo[];
 }

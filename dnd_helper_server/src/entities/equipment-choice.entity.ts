@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 import { Equipment } from "./equipment.entity";
 
 @Entity('equipment_choice')
@@ -12,6 +12,6 @@ export class EquipmentChoice {
   @Column()
   choose: number;
 
-  @ManyToOne(() => Equipment, equipment => equipment.index)
+  @Column()
   equipment_options: Equipment[];
 }

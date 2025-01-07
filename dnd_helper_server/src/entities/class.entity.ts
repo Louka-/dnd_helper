@@ -1,4 +1,4 @@
-import { Entity, Column, ManyToOne, PrimaryColumn } from 'typeorm';
+import { Entity, Column, PrimaryColumn } from 'typeorm';
 import { ProficienciesOption } from './proficiencies-option.entity';
 import { Proficiency } from './proficiency.entity';
 import { Equipment } from './equipment.entity';
@@ -17,19 +17,19 @@ export class Class {
   @Column()
   hit_die: number;
 
-  @ManyToOne(() => ProficienciesOption, proficiencyOption => proficiencyOption.id)
+  @Column()
   proficiency_choices: ProficienciesOption[];
 
-  @ManyToOne(() => Proficiency, proficiency => proficiency.index)
+  @Column()
   proficiencies: Proficiency[];
 
-  @ManyToOne(() => AbilityScore, abilityScore => abilityScore.index)
+  @Column()
   saving_throws: AbilityScore[];
 
-  @ManyToOne(() => Equipment, equipment => equipment.index)
+  @Column()
   starting_equipment: Equipment[];
 
-  @ManyToOne(() => EquipmentChoice, equipmentChoice => equipmentChoice.id)
+  @Column()
   starting_equipment_options: EquipmentChoice[];
 
   @Column()
@@ -43,7 +43,7 @@ export class Class {
   @Column({ nullable: true })
   multi_classing: string;
 
-  @ManyToOne(() => Spellcasting, spellcasting => spellcasting.id)
+  @Column()
   spellcasting: Spellcasting;
 
   @Column()

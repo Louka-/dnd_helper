@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryColumn, ManyToOne } from "typeorm";
+import { Entity, Column, PrimaryColumn } from "typeorm";
 import { AbilityBonus } from "./ability-bonus.entity";
 import { Proficiency } from "./proficiency.entity";
 import { Language } from "./language.entity";
@@ -15,16 +15,16 @@ export class Subrace {
   @Column()
   desc: string;
 
-  @ManyToOne(() => AbilityBonus, (abilityBonus) => abilityBonus.id)
+  @Column()
   ability_bonuses: AbilityBonus[];
 
-  @ManyToOne(() => Proficiency, (proficiency) => proficiency.index)
+  @Column()
   starting_proficiencies: Proficiency[];
 
-  @ManyToOne(() => Language, (language) => language.index)
+  @Column()
   languages?: Language[];
 
-  @ManyToOne(() => Trait, (trait) => trait.index)
+  @Column()
   traits: Trait[];
 
   @Column()
