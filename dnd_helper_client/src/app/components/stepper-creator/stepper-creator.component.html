@@ -1,0 +1,77 @@
+<mat-stepper [linear]="false" orientation="vertical" #stepper (selectionChange)="onStepChange($event)">
+  <!--race selector-->
+  <mat-step [stepControl]="firstFormGroup" label="Choose a Race">
+    <form [formGroup]="firstFormGroup">
+      <race-selector (raceToDisplay)="onRaceToDisplay($event)"></race-selector>
+      <div>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <!--class selector-->
+  <mat-step [stepControl]="secondFormGroup" label="Choose a Class">
+    <form [formGroup]="secondFormGroup">
+      <class-selector (classToDisplay)="onClassToDisplay($event)"></class-selector>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <!--background selector-->
+  <mat-step label="Choose a Background">
+    <p>Background</p>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+  <!--ability scores selector-->
+  <mat-step label="Ability scores and HP">
+    <p>Ability scores</p>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+  <!--class capacities selector-->
+  <mat-step label="Class special skills">
+    <p>Special skills</p>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+  <!--proficiencies selector-->
+  <mat-step label="Choose Proficiencies">
+    <p>Proficiencies</p>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+  <!--equipment selector-->
+  <mat-step label="Choose equipments">
+    <p>Equipment</p>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+  <!--spells selector-->
+  <mat-step label="Choose known spells">
+    <p>Spells</p>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+  <!--character description-->
+  <mat-step label="Character description">
+    <p>Description</p>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+</mat-stepper>

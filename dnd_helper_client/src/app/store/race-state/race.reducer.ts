@@ -27,6 +27,11 @@ export const raceReducer = createReducer(
         : [...state.raceDetails, raceDetails]
   })),
   on(racesActions.getSubraceById, (state) => ({ ...state })),
-  on(racesActions.getSubraceSuccess, (state, { subraces }) => ({ ...state, subraces })),
+  on(racesActions.getSubraceSuccess, (state, { subraces }) => ({
+    ...state, subraces:
+      (state.subraces.some(storedRace => storedRace.index === subraces.index) && state.subraces.length !== 0)
+        ? state.subraces
+        : [...state.subraces, subraces]
+  })),
 );
 

@@ -1,0 +1,9 @@
+@let races = races$ | async;
+<mat-form-field>
+  <mat-label>Races</mat-label>
+  <mat-select [(value)]="selectedRace" (selectionChange)="getRaceById()">
+    @for (race of races; track race) {
+    <mat-option [value]="race.index">{{race.name}}</mat-option>
+    }
+  </mat-select>
+</mat-form-field>

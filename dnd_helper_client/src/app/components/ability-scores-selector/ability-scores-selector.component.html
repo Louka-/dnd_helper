@@ -1,0 +1,12 @@
+<div class="number-selector">
+  {{abilityName}}
+  <button mat-icon-button (click)="decrement()" [disabled]="finalScore <= minValue">
+    <mat-icon>remove_circle</mat-icon>
+  </button>
+  <span>{{ brutScore }}</span>
+  <button mat-icon-button (click)="increment()" [disabled]="finalScore >= maxValue || disableAddButton">
+    <mat-icon>add_circle</mat-icon>
+  </button>
+  <span>+{{ racialBonus }}</span>
+  <span>={{ finalScore }}</span>
+</div>

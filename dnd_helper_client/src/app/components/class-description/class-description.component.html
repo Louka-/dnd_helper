@@ -1,0 +1,13 @@
+@let classDetails = classDetails$ | async;
+<p>
+  {{classDetails?.name}}
+</p>
+@for (option of classDetails?.starting_equipment_options; track option) {
+{{option.choose}}
+{{option.description}}
+@for (equipment of option.equipment_options; track equipment) {
+{{equipment.name}}
+{{equipment.quantity}}
+{{equipment.url}}
+}
+}

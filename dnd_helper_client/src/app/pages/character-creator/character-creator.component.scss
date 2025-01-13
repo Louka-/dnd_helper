@@ -1,0 +1,17 @@
+.section {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.stepper-container {
+  flex: 1;  /* Le stepper prendra 1/3 de la largeur */
+  max-width: 33%; /* S'assurer que le stepper occupe toute la largeur disponible */
+}
+
+.details-container {
+  flex: 2;  /* Le contenu prendra 2/3 de la largeur */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
