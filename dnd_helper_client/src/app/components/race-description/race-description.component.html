@@ -1,0 +1,11 @@
+@let raceDetails = raceDetails$ | async;
+<p>
+  {{raceDetails?.name}}
+</p>
+<div>
+  {{raceDetails?.starting_proficiency_options?.choose}}
+  {{raceDetails?.starting_proficiency_options?.description}}
+  @for (option of raceDetails?.starting_proficiency_options?.options; track option) {
+  {{option.name}}
+  }
+</div>

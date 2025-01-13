@@ -45,11 +45,11 @@ export class RaceEffects {
     )
   });
 
-  subraceGetOneById$ = createEffect((actions$ = inject(Actions), subraceService = inject(SubraceService), store = inject(Store)) => {
+  subraceGetOneById$ = createEffect((actions$ = inject(Actions), subraceService = inject(SubraceService)) => {
     return actions$.pipe(
       ofType(racesActions.getSubraceById),
-      switchMap(action => { console.log(action); return subraceService.getSubraceById(action.index) }),
-      map((subraces) => racesActions.getSubraceSuccess({ subraces: [subraces] })),
+      switchMap(action =>  subraceService.getSubraceById(action.index)),
+      map((subraces) => racesActions.getSubraceSuccess({ subraces: subraces })),
     );
   });
 }

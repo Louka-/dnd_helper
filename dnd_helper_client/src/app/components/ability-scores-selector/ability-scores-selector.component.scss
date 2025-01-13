@@ -1,0 +1,29 @@
+
+.number-selector {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+button {
+  font-size: 16px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+button:disabled {
+  background-color: lightgray;
+  cursor: not-allowed;
+}
+
+.example-button-row {
+  display: table-cell;
+  max-width: 600px;
+}
+
+.example-flex-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+

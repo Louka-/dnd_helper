@@ -1,0 +1,10 @@
+@for (ability of abilitiesWithDefaults; track ability) {
+  {{totalPoints}}
+  <ability-scores-selector
+    (addPointEvent)="increment()"
+    (removePointEvent)="decrement()"
+    [abilityName]="ability.ability_score"
+    [racialBonus]="ability.bonus"
+    [disableAddButton]="!totalPoints"
+  ></ability-scores-selector>
+}

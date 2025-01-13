@@ -14,7 +14,7 @@ export const racesActions = createActionGroup({
     'Get Race Failure': props<{ error: any }>(),
 
     'Get Subrace By Id': props<{ index: string }>(),
-    'Get Subrace Success': props<{ subraces: Subrace[] }>(),
+    'Get Subrace Success': props<{ subraces: Subrace }>(),
     'Get Subrace Failure': props<{ error: any }>(),
   },
 });

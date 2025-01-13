@@ -1,43 +1,42 @@
-@let races = races$ | async;
-@let classes = classes$ | async;
-@let raceDetails = raceDetails$ | async;
-@let classDetails = classDetails$ | async;
-<mat-form-field>
-  <mat-label>Races</mat-label>
-  <mat-select [(value)]="selectedRace" (selectionChange)="getRaceById()">
-    @for (race of races; track race) {
-    <mat-option [value]="race.index">{{race.name}}</mat-option>
-    }
-  </mat-select>
-</mat-form-field>
 
-<div>
-  {{raceDetails?.name}}
-  {{raceDetails?.starting_proficiency_options?.choose}}
-  {{raceDetails?.starting_proficiency_options?.description}}
-  @for (option of raceDetails?.starting_proficiency_options?.options; track option) {
-  {{option.name}}
-  }
+
+<div class="section">
+  <div class="stepper-container">
+    <stepper-creator
+      (step)="changeStep($event)"
+      (raceToDisplay)="displayRaceDetails($event)"
+      (classToDisplay)="displayClassDetails($event)"
+    ></stepper-creator>
+  </div>
+  <div class="details-container">
+    <div *ngIf="step === 0">
+      <race-description [raceDetails$]="raceToDisplay$"></race-description>
+    </div>
+    <div *ngIf="step === 1">
+      <class-description [classDetails$]="classToDisplay$"></class-description>
+    </div>
+    <div *ngIf="step === 2">
+      <p>Composant pour l'étape 3</p>
+      <p>Race</p>
+    </div>
+  </div>
 </div>
 
-<mat-form-field>
-  <mat-label>Classes</mat-label>
-  <mat-select [(value)]="selectedClass" (selectionChange)="getClassById()">
-    @for (class of classes; track class) {
-    <mat-option [value]="class.index">{{class.name}}</mat-option>
-    }
-  </mat-select>
-</mat-form-field>
+<!-- <button (click)="getBonuses()">get bonuses</button>
+@if(abilityBonus) {
+  <ability-scores-array [abilityBonus]="abilityBonus"></ability-scores-array>
+} -->
 
-<div>
-  {{classDetails?.name}}
-  @for (option of classDetails?.starting_equipment_options; track option) {
-  {{option.choose}}
-  {{option.description}}
-  @for (equipment of option.equipment_options; track equipment) {
-  {{equipment.name}}
-  {{equipment.quantity}}
-  {{equipment.url}}
-  }
-  }
-</div>
+
+
+//stepper
+//description du personnage
+//choix de la race
+//choix de la classe
+//choix du background et un alignement
+//répartition des points de caractéristique et points de vie
+//choix des capacités de classe
+//choix des maitrises
+//choix des options et équipements
+//choix des sorts connus
+//récapitulatif et présentation de la feuille

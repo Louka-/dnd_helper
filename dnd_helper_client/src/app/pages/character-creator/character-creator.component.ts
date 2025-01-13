@@ -1,50 +1,50 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { map, Observable, tap } from 'rxjs';
-import { Race, RaceDetails } from '../../models/race.model';
 import { Store } from '@ngrx/store';
-import { racesActions } from '../../store/race-state/race.actions';
-import { selectAllRaces, selectRaceById } from '../../store/race-state/race.selectors';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, inject } from '@angular/core';
+import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
-import { classesActions } from '../../store/class-state/class.actions';
-import { Class, ClassDetails } from '../../models/class.model';
-import { selectAllClasses, selectClassById } from '../../store/class-state/class.selectors';
-import { Subrace } from '../../models/subrace.model';
+import { StepperCreatorComponent } from '../../components/stepper-creator/stepper-creator.component';
+import { RaceDescriptionComponent } from '../../components/race-description/race-description.component';
+import { selectRaceById } from '../../store/race-state/race.selectors';
+import { RaceDetails } from '../../models/race.model';
+import { Observable } from 'rxjs';
+import { ClassDetails } from '../../models/class.model';
+import { selectClassById } from '../../store/class-state/class.selectors';
+import { ClassDescriptionComponent } from '../../components/class-description/class-description.component';
 
 @Component({
   selector: 'character-creator',
   standalone: true,
-  imports: [CommonModule, MatFormFieldModule, MatSelectModule, MatInputModule],
+  imports: [
+    CommonModule,
+    MatInputModule,
+    StepperCreatorComponent,
+    RaceDescriptionComponent,
+    ClassDescriptionComponent
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './character-creator.component.html',
   styleUrl: './character-creator.component.scss'
 })
-export class CharacterCreatorComponent implements OnInit {
-
+export class CharacterCreatorComponent {
   private store = inject(Store)
-  races$: Observable<Race[]> = this.store.select(selectAllRaces);
-  classes$: Observable<Class[]> = this.store.select(selectAllClasses);
-  selectedRace = '';
-  selectedClass = '';
-  raceDetails$!: Observable<RaceDetails>;
-  subraces$!: Observable<Subrace[]>;
-  classDetails$!: Observable<ClassDetails>;
+  step = 0;
+  raceToDisplay$!: Observable<RaceDetails>;
+  classToDisplay$!: Observable<ClassDetails>;
 
-  constructor() { }
-
-  ngOnInit(): void {
-    this.store.dispatch(racesActions.getAllRaces());
-    this.store.dispatch(classesActions.getAllClasses());
+  changeStep(event: number) {
+    if(event > this.step) {
+      ++this.step
+    }
+    if(event < this.step) {
+      --this.step
+    }
   }
 
-  getRaceById(): void {
-    this.store.dispatch(racesActions.getRaceById({ index: this.selectedRace }));
-    this.raceDetails$ = this.store.select(selectRaceById(this.selectedRace)) as Observable<RaceDetails>
+  displayRaceDetails(r: string) {
+    this.raceToDisplay$ = this.store.select(selectRaceById(r)) as Observable<RaceDetails>;
   }
 
-  getClassById(): void {
-    this.store.dispatch(classesActions.getClassById({ index: this.selectedClass }));
-    this.classDetails$ = this.store.select(selectClassById(this.selectedClass)) as Observable<ClassDetails>
+  displayClassDetails(c: string) {
+    this.classToDisplay$ = this.store.select(selectClassById(c)) as Observable<ClassDetails>;
   }
 }
