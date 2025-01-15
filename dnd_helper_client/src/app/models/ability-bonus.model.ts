@@ -4,12 +4,7 @@ export interface AbilityScore {
   url: string;
 }
 
-export interface AbilityBonuses {
-  ability_score: AbilityScore;
-  bonus: number;
-}
-
 export interface AbilityBonus {
-  ability_score: string;
+  ability_score: AbilityScore;
   bonus: number;
 }

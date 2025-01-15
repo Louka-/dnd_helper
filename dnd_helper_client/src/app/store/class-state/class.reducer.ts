@@ -7,16 +7,17 @@ export interface State {
   classDetails: ClassDetails[];
 };
 
-export const initialState: State = {
+export const classInitialState: State = {
   classes: [],
   classDetails: [],
 };
 
 export const classReducer = createReducer(
-  initialState,
+  classInitialState,
   on(classesActions.getAllClasses, (state) => ({ ...state })),
   on(classesActions.getAllClassesSuccess, (state, { classes }) => ({ ...state, classes: classes })),
-  on(classesActions.getClassById, (state) => ({ ...state })),
+  on(classesActions.getClassByIdFromApi, (state) => ({ ...state })),
+  on(classesActions.getClassFromStore, (state) => ({ ...state })),
   on(classesActions.getClassSuccess, (state, { classDetails }) => ({
     ...state, classDetails:
       (state.classDetails.some(storedRace => storedRace.index === classDetails.index) && state.classDetails.length !== 0)

@@ -12,6 +12,8 @@ import { RaceEffects } from './store/race-state/race.effects';
 import { raceReducer } from './store/race-state/race.reducer';
 import { classReducer } from './store/class-state/class.reducer';
 import { ClassEffects } from './store/class-state/class.effects';
+import { DraftCharacterEffects } from './store/draft-character-state/draft-character.effects';
+import { draftCharacterReducer } from './store/draft-character-state/draft-character.reducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -23,10 +25,12 @@ export const appConfig: ApplicationConfig = {
     provideStore({
       races: raceReducer,
       classes: classReducer,
+      draftCharacter: draftCharacterReducer,
     }),
     provideEffects(
       RaceEffects,
       ClassEffects,
+      DraftCharacterEffects,
     ),
     provideStoreDevtools(),
   ]

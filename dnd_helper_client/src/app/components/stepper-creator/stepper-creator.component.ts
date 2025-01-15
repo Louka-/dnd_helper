@@ -7,6 +7,9 @@ import { MatInputModule } from '@angular/material/input';
 import { RaceSelectorComponent } from '../race-selector/race-selector.component';
 import { ClassSelectorComponent } from '../class-selector/class-selector.component';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
+import { Observable } from 'rxjs';
+import { RaceDetails } from '../../models/race.model';
+import { ClassDetails } from '../../models/class.model';
 
 @Component({
   selector: 'stepper-creator',
@@ -26,8 +29,9 @@ import { StepperSelectionEvent } from '@angular/cdk/stepper';
 })
 export class StepperCreatorComponent  {
   @Output('step') step = new EventEmitter<number>();
-  @Output('raceToDisplay') raceToDisplay = new EventEmitter<string>();
-  @Output('classToDisplay') classToDisplay = new EventEmitter<string>();
+  @Output('raceToDisplay') raceToDisplay = new EventEmitter<Observable<RaceDetails>>();
+  @Output('classToDisplay') classToDisplay = new EventEmitter<Observable<ClassDetails>>();
+
   currentStep: number = 0;
 
   private _formBuilder = inject(FormBuilder);
@@ -45,11 +49,11 @@ export class StepperCreatorComponent  {
     this.step.emit(event.selectedIndex);
   }
 
-  onRaceToDisplay(r: string): void {
+  onRaceToDisplay(r: Observable<RaceDetails>): void {
     this.raceToDisplay.emit(r);
   }
 
-  onClassToDisplay(c: string): void {
+  onClassToDisplay(c: Observable<ClassDetails>): void {
     this.classToDisplay.emit(c);
   }
 }

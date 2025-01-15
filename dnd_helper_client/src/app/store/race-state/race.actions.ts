@@ -9,7 +9,8 @@ export const racesActions = createActionGroup({
     'Get All Races Success': props<{ races: Race[] }>(),
     'Get All Races Failure': props<{ error: any }>(),
 
-    'Get Race By Id': props<{ index: string }>(),
+    'Get Race By Id From Api': props<{ index: string }>(),
+    'Get Race From Store': props<{ raceDetails: RaceDetails }>(),
     'Get Race Success': props<{ raceDetails: RaceDetails }>(),
     'Get Race Failure': props<{ error: any }>(),
 

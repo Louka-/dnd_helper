@@ -11,6 +11,7 @@
   <div class="details-container">
     <div *ngIf="step === 0">
       <race-description [raceDetails$]="raceToDisplay$"></race-description>
+      <button (click)="button()">CLIC</button>
     </div>
     <div *ngIf="step === 1">
       <class-description [classDetails$]="classToDisplay$"></class-description>
@@ -20,12 +21,11 @@
       <p>Race</p>
     </div>
   </div>
+  <div *ngIf="step === 3">
+    <ability-scores-array [abilityBonus]=""></ability-scores-array>
+  </div>
 </div>
 
-<!-- <button (click)="getBonuses()">get bonuses</button>
-@if(abilityBonus) {
-  <ability-scores-array [abilityBonus]="abilityBonus"></ability-scores-array>
-} -->
 
 
 
