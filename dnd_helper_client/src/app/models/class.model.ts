@@ -1,4 +1,4 @@
-import { AbilityBonus, AbilityScore } from "./ability-bonus.model";
+import { AbilityScore } from "./ability-bonus.model";
 import { EquipmentChoice } from "./equipment-choice.model";
 import { Equipment } from "./equipment.model";
 import { Language } from "./language.model";

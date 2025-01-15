@@ -8,7 +8,8 @@ export const classesActions = createActionGroup({
     'Get All Classes Success': props<{ classes: Class[] }>(),
     'Get All Classes Failure': props<{ error: any }>(),
 
-    'Get Class By Id': props<{ index: string }>(),
+    'Get Class By Id From Api': props<{ index: string }>(),
+    'Get Class From Store': props<{ classDetails: ClassDetails }>(),
     'Get Class Success': props<{ classDetails: ClassDetails }>(),
     'Get Class Failure': props<{ error: any }>()
   },

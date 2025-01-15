@@ -9,17 +9,18 @@ export interface State {
   subraces: Subrace[];
 };
 
-export const initialState: State = {
+export const raceInitialState: State = {
   races: [],
   raceDetails: [],
   subraces: [],
 };
 
 export const raceReducer = createReducer(
-  initialState,
+  raceInitialState,
   on(racesActions.getAllRaces, (state) => ({ ...state })),
   on(racesActions.getAllRacesSuccess, (state, { races }) => ({ ...state, races: races })),
-  on(racesActions.getRaceById, (state) => ({ ...state })),
+  on(racesActions.getRaceByIdFromApi, (state) => ({ ...state })),
+  on(racesActions.getRaceFromStore, (state) => ({ ...state })),
   on(racesActions.getRaceSuccess, (state, { raceDetails }) => ({
     ...state, raceDetails:
       (state.raceDetails.some(storedRace => storedRace.index === raceDetails.index) && state.raceDetails.length !== 0)

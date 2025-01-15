@@ -1,5 +1,4 @@
 @let classes = classes$ | async;
-<!-- @let classDetails = classDetails$ | async; -->
 
 <mat-form-field>
   <mat-label>Classes</mat-label>
@@ -9,16 +8,3 @@
     }
   </mat-select>
 </mat-form-field>
-
-<!-- <p>
-  {{classDetails?.name}}
-</p>
-@for (option of classDetails?.starting_equipment_options; track option) {
-{{option.choose}}
-{{option.description}}
-@for (equipment of option.equipment_options; track equipment) {
-{{equipment.name}}
-{{equipment.quantity}}
-{{equipment.url}}
-}
-} -->

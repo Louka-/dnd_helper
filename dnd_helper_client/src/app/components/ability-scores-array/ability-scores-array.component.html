@@ -1,9 +1,10 @@
-@for (ability of abilitiesWithDefaults; track ability) {
+@let abilityBonuses = abilityBonuses$ | async;
+@for (ability of abilityBonuses; track ability) {
   {{totalPoints}}
   <ability-scores-selector
     (addPointEvent)="increment()"
     (removePointEvent)="decrement()"
-    [abilityName]="ability.ability_score"
+    [abilityName]="ability.ability_score.name"
     [racialBonus]="ability.bonus"
     [disableAddButton]="!totalPoints"
   ></ability-scores-selector>

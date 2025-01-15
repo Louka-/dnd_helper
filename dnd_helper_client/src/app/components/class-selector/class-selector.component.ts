@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { combineLatest, map, Observable, take } from 'rxjs';
 import { Class, ClassDetails } from '../../models/class.model';
 import { classesActions } from '../../store/class-state/class.actions';
-import { selectAllClasses, selectClassById } from '../../store/class-state/class.selectors';
+import { selectAllClasses, selectClassById, selectClassDetails } from '../../store/class-state/class.selectors';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 
@@ -15,7 +15,7 @@ import { MatSelectModule } from '@angular/material/select';
   styleUrl: './class-selector.component.scss'
 })
 export class ClassSelectorComponent implements OnInit {
-  @Output('classToDisplay') classToDisplay = new EventEmitter<string>();
+  @Output('classToDisplay') classToDisplay = new EventEmitter<Observable<ClassDetails>>();
   private store = inject(Store);
   classes$: Observable<Class[]> = this.store.select(selectAllClasses);
   classDetails$!: Observable<ClassDetails>;
@@ -26,8 +26,23 @@ export class ClassSelectorComponent implements OnInit {
   }
 
   getClassById(): void {
-    this.store.dispatch(classesActions.getClassById({ index: this.selectedClass }));
+    combineLatest({
+      classDetails: this.store.select(selectClassDetails),
+      c: this.store.select(selectClassById(this.selectedClass))
+    }).pipe(
+      take(1),
+      map(({classDetails, c}) => {
+        const isAvailableCurrentRace = c && classDetails.some(storedRaces =>  storedRaces.index === this.selectedClass);
+        const currentRace = classDetails.find(storedRaces =>  storedRaces.index === this.selectedClass);
+        if(isAvailableCurrentRace) {
+          this.store.dispatch(classesActions.getClassFromStore({ classDetails: currentRace as ClassDetails }),
+        )
+      } else {
+          this.store.dispatch(classesActions.getClassByIdFromApi({ index: this.selectedClass }));
+        }
+      })
+    ).subscribe()
     this.classDetails$ = this.store.select(selectClassById(this.selectedClass)) as Observable<ClassDetails>;
-    this.classToDisplay.emit(this.selectedClass);
+    this.classToDisplay.emit(this.classDetails$);
   }
 }

@@ -1,11 +1,11 @@
 import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { ClassService } from '../../services/class.service';
 import { classesActions } from './class.actions'
-import { select, Store } from '@ngrx/store';
-import { selectClassById } from './class.selectors';
+import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
+import { draftCharacterActions } from '../draft-character-state/draft-character.actions';
 
 @Injectable()
 export class ClassEffects {
@@ -20,25 +20,27 @@ export class ClassEffects {
     },
   );
 
-  classGetOneById$ = createEffect((actions$ = inject(Actions), classService = inject(ClassService), store = inject(Store)) => {
+  classGetOneByIdFromApi$ = createEffect((actions$ = inject(Actions), classService = inject(ClassService), store = inject(Store)) => {
     return actions$.pipe(
-      ofType(classesActions.getClassById),
+      ofType(classesActions.getClassByIdFromApi),
       switchMap((action) => {
-        return store.pipe(
-          select(selectClassById(action.index)),
-          switchMap((c) => {
-            if (c) {
-              return of(classesActions.getClassSuccess({ classDetails: c }));
-            } else {
-              return classService.getClassById(action.index).pipe(
-                map((classDetails) => classesActions.getClassSuccess({ classDetails })),
-                catchError((error) => of(classesActions.getClassFailure({ error })))
-              );
-            }
-          })
+        return classService.getClassById(action.index).pipe(
+          map((classDetails) => {
+            store.dispatch(draftCharacterActions.getSelectedClass({selectedClass: classDetails}));
+            return classesActions.getClassSuccess({ classDetails });
+          }),
         );
       })
     )
-  }
-  );
+  });
+
+  classGetOneFromStore$ = createEffect((actions$ = inject(Actions), store = inject(Store)) => {
+    return actions$.pipe(
+      ofType(classesActions.getClassFromStore),
+      switchMap((action) => {
+        store.dispatch(draftCharacterActions.getSelectedClass({selectedClass: action.classDetails}));
+        return of(classesActions.getClassSuccess({ classDetails: action.classDetails }));
+      })
+    )
+  });
 }

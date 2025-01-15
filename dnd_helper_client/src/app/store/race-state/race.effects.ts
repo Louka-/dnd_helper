@@ -1,12 +1,13 @@
 import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { RaceService } from '../../services/race.service';
 import { racesActions } from './race.actions'
-import { select, Store } from '@ngrx/store';
-import { selectRaceById } from './race.selectors';
+import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { SubraceService } from '../../services/subrace.service';
+import { draftCharacterActions } from '../draft-character-state/draft-character.actions';
+import { draftCharacterInitialState } from '../draft-character-state/draft-character.reducer';
 
 @Injectable()
 export class RaceEffects {
@@ -21,35 +22,48 @@ export class RaceEffects {
     },
   );
 
-  raceGetOneById$ = createEffect((actions$ = inject(Actions), raceService = inject(RaceService), store = inject(Store)) => {
+  raceGetOneByIdFromApi$ = createEffect((actions$ = inject(Actions), raceService = inject(RaceService), store = inject(Store)) => {
     return actions$.pipe(
-      ofType(racesActions.getRaceById),
+      ofType(racesActions.getRaceByIdFromApi),
       switchMap((action) => {
-        return store.pipe(
-          select(selectRaceById(action.index)),
-          switchMap((race) => {
-            if (race) {
-              if (race.subraces) {
-                race.subraces.forEach(subrace => store.dispatch(racesActions.getSubraceById({ index: subrace.index })));
-              }
-              return of(racesActions.getRaceSuccess({ raceDetails: race }));
-            } else {
-              return raceService.getRaceById(action.index).pipe(
-                map((raceDetails) => racesActions.getRaceSuccess({ raceDetails })),
-                catchError((error) => of(racesActions.getRaceFailure({ error })))
-              );
-            }
-          })
+        return raceService.getRaceById(action.index).pipe(
+          map((raceDetails) => {
+            store.dispatch(draftCharacterActions.getSelectedRace({selectedRace: raceDetails}));
+            store.dispatch(draftCharacterActions.getRaceAbilityBonuses({abilityBonuses: raceDetails.ability_bonuses}));
+            return racesActions.getRaceSuccess({ raceDetails });
+          }),
         );
-      })
+      }),
     )
   });
 
-  subraceGetOneById$ = createEffect((actions$ = inject(Actions), subraceService = inject(SubraceService)) => {
+  raceGetOneFromStore$ = createEffect((actions$ = inject(Actions), store = inject(Store)) => {
+    return actions$.pipe(
+      ofType(racesActions.getRaceFromStore),
+      switchMap((action) => {
+        store.dispatch(draftCharacterActions.getSelectedRace({selectedRace: action.raceDetails}));
+        store.dispatch(draftCharacterActions.getRaceAbilityBonuses({abilityBonuses: action.raceDetails.ability_bonuses}));
+        return of(racesActions.getRaceSuccess({ raceDetails: action.raceDetails }));
+      }),
+    )
+  });
+
+  subraceGetOneById$ = createEffect((actions$ = inject(Actions), subraceService = inject(SubraceService), store = inject(Store)) => {
     return actions$.pipe(
       ofType(racesActions.getSubraceById),
-      switchMap(action =>  subraceService.getSubraceById(action.index)),
-      map((subraces) => racesActions.getSubraceSuccess({ subraces: subraces })),
+      switchMap(action => {
+        if(action.index) {
+          return subraceService.getSubraceById(action.index).pipe(
+            map((subraces) => {
+              store.dispatch(draftCharacterActions.getSubraceAbilityBonuses({abilityBonuses: subraces.ability_bonuses}));
+              return racesActions.getSubraceSuccess({ subraces: subraces });
+          }),
+          )
+        } else {
+          store.dispatch(draftCharacterActions.getSubraceAbilityBonuses({abilityBonuses: draftCharacterInitialState.abilityBonuses}));
+          return of(racesActions.getSubraceFailure({ error: 'no such subrace' }));
+        }
+      }),
     );
   });
 }

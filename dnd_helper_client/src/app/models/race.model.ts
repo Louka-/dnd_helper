@@ -1,4 +1,4 @@
-import { AbilityBonuses } from "./ability-bonus.model";
+import { AbilityBonus } from "./ability-bonus.model";
 import { Language } from "./language.model";
 import { Proficiency, ProficienciesChoice } from "./proficiency.model";
 import { Subrace } from "./subrace.model";
@@ -11,7 +11,7 @@ export interface Race {
 }
 
 export interface RaceDetails extends Race {
-  ability_bonuses: AbilityBonuses[];
+  ability_bonuses: AbilityBonus[];
   age: string;
   alignment: string;
   language_desc: string;
