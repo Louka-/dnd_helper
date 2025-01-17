@@ -9,21 +9,45 @@
     ></stepper-creator>
   </div>
   <div class="details-container">
+    <!--race description-->
     <div *ngIf="step === 0">
       <race-description [raceDetails$]="raceToDisplay$"></race-description>
-      <button (click)="button()">CLIC</button>
     </div>
+    <!--class description-->
     <div *ngIf="step === 1">
       <class-description [classDetails$]="classToDisplay$"></class-description>
     </div>
+    <!--background description-->
+    <!-- <div *ngIf="step === 2">
+      <p>Background description</p>
+      <p>Some Background description</p>
+    </div> -->
+    <!--ability scores array-->
     <div *ngIf="step === 2">
-      <p>Composant pour l'étape 3</p>
-      <p>Race</p>
+      <ability-scores-array></ability-scores-array>
+    </div>
+    <!--Proficiencies choices-->
+    <div *ngIf="step === 3">
+      <p>Proficiencies choices</p>
+      <p>Choose Proficiencies</p>
+    </div>
+    <!--Equipment choices-->
+    <div *ngIf="step === 4">
+      <p>Equipment choices</p>
+      <p>Choose Equipment</p>
+    </div>
+    <!--spells choices-->
+    <div *ngIf="step === 5">
+      <p>Spells choices</p>
+      <p>Choose known spells</p>
+    </div>
+    <!--character inputs-->
+    <div *ngIf="step === 6">
+      <p>Character description</p>
+      <p>Choose a name, age, description...</p>
     </div>
   </div>
-  <div *ngIf="step === 3">
-    <ability-scores-array [abilityBonus]=""></ability-scores-array>
-  </div>
+
 </div>
 
 

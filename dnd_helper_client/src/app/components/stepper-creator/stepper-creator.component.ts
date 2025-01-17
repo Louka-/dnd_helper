@@ -10,11 +10,13 @@ import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { Observable } from 'rxjs';
 import { RaceDetails } from '../../models/race.model';
 import { ClassDetails } from '../../models/class.model';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'stepper-creator',
   standalone: true,
   imports: [
+    CommonModule,
     MatButtonModule,
     MatStepperModule,
     FormsModule,
@@ -31,7 +33,8 @@ export class StepperCreatorComponent  {
   @Output('step') step = new EventEmitter<number>();
   @Output('raceToDisplay') raceToDisplay = new EventEmitter<Observable<RaceDetails>>();
   @Output('classToDisplay') classToDisplay = new EventEmitter<Observable<ClassDetails>>();
-
+  raceDetails$!: Observable<RaceDetails>
+  classDetails$!: Observable<ClassDetails>
   currentStep: number = 0;
 
   private _formBuilder = inject(FormBuilder);
@@ -50,10 +53,12 @@ export class StepperCreatorComponent  {
   }
 
   onRaceToDisplay(r: Observable<RaceDetails>): void {
+    this.raceDetails$ = r;
     this.raceToDisplay.emit(r);
   }
 
   onClassToDisplay(c: Observable<ClassDetails>): void {
+    this.classDetails$ = c;
     this.classToDisplay.emit(c);
   }
 }

@@ -55,12 +55,12 @@ export class DraftCharacterEffects {
               const updatedAbilityBonuses = abilityBonuses.map(item => {
                 const updatedItem = action.abilityBonuses.find(updated => updated.ability_score.index === item.ability_score.index);
                 return updatedItem ? updatedItem : item;
-            });
-            if (JSON.stringify(updatedAbilityBonuses) !== JSON.stringify(abilityBonuses)) {
-              return of(draftCharacterActions.getSubraceAbilityBonusesSuccess({ abilityBonuses: updatedAbilityBonuses }));
-            } else {
-              return EMPTY;
-            }
+              });
+              if (JSON.stringify(updatedAbilityBonuses) !== JSON.stringify(abilityBonuses)) {
+                return of(draftCharacterActions.getSubraceAbilityBonusesSuccess({ abilityBonuses: updatedAbilityBonuses }));
+              } else {
+                return EMPTY;
+              }
             })
           )
         })
