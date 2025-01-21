@@ -3,13 +3,13 @@ import { racesActions } from './race.actions';
 import { Race, RaceDetails } from '../../models/race.model';
 import { Subrace } from '../../models/subrace.model';
 
-export interface State {
+export interface RaceState {
   races: Race[];
   raceDetails: RaceDetails[];
   subraces: Subrace[];
 };
 
-export const raceInitialState: State = {
+export const raceInitialState: RaceState = {
   races: [],
   raceDetails: [],
   subraces: [],

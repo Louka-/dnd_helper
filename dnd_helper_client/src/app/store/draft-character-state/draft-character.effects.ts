@@ -6,6 +6,7 @@ import { EMPTY, of } from 'rxjs';
 import { draftCharacterActions } from './draft-character.actions';
 import { draftCharacterInitialState } from './draft-character.reducer';
 import { selectCurrentAbilityBonuses } from './draft-character.selectors';
+import { AbilityBonus } from '../../models/ability-bonus.model';
 
 @Injectable()
 export class DraftCharacterEffects {
@@ -29,15 +30,26 @@ export class DraftCharacterEffects {
   );
 
   raceAbilityBonusesGet$ = createEffect(
-    (actions$ = inject(Actions)) => {
+    (actions$ = inject(Actions), store = inject(Store)) => {
       return actions$.pipe(
         ofType(draftCharacterActions.getRaceAbilityBonuses),
-        map((aB) => {
-            const updatedAbilityBonuses = draftCharacterInitialState.abilityBonuses.map(item => {
-            const updatedItem = aB.abilityBonuses.find(updated => updated.ability_score.index === item.ability_score.index);
-            return updatedItem ? updatedItem : item;
+        map((action) => {
+          const updatedAbilityBonuses = draftCharacterInitialState.abilityBonuses.map(item => {
+          const updatedItem = action.abilityBonuses.find(updated => updated.ability_score.index === item.ability_score.index);
+          return updatedItem ? updatedItem : item;
         });
-          return draftCharacterActions.getRaceAbilityBonusesSuccess({ abilityBonuses: updatedAbilityBonuses });
+          action.abilityBonuses.map(abilityBonus => {
+            switch(abilityBonus.ability_score.index) {
+              case 'str': store.dispatch(draftCharacterActions.increaseStrenghtWithRacialBonuses({ abilityBonus: abilityBonus })); break;
+              case 'con': store.dispatch(draftCharacterActions.increaseConstitutionWithRacialBonuses({ abilityBonus: abilityBonus })); break;
+              case 'dex': store.dispatch(draftCharacterActions.increaseDexterityWithRacialBonuses({ abilityBonus: abilityBonus })); break;
+              case 'int': store.dispatch(draftCharacterActions.increaseIntelligenceWithRacialBonuses({ abilityBonus: abilityBonus })); break;
+              case 'wis': store.dispatch(draftCharacterActions.increaseWisdomWithRacialBonuses({ abilityBonus: abilityBonus })); break;
+              case 'cha': store.dispatch(draftCharacterActions.increaseCharismaWithRacialBonuses({ abilityBonus: abilityBonus })); break;
+              default: null
+            }
+          });
+            return draftCharacterActions.getRaceAbilityBonusesSuccess({ abilityBonuses: updatedAbilityBonuses });
         })
       );
     },
@@ -55,6 +67,17 @@ export class DraftCharacterEffects {
               const updatedAbilityBonuses = abilityBonuses.map(item => {
                 const updatedItem = action.abilityBonuses.find(updated => updated.ability_score.index === item.ability_score.index);
                 return updatedItem ? updatedItem : item;
+              });
+              action.abilityBonuses.map(abilityBonus => {
+                switch(abilityBonus.ability_score.index) {
+                  case 'str': store.dispatch(draftCharacterActions.increaseStrenghtWithRacialBonuses({ abilityBonus: abilityBonus })); break;
+                  case 'con': store.dispatch(draftCharacterActions.increaseConstitutionWithRacialBonuses({ abilityBonus: abilityBonus })); break;
+                  case 'dex': store.dispatch(draftCharacterActions.increaseDexterityWithRacialBonuses({ abilityBonus: abilityBonus })); break;
+                  case 'int': store.dispatch(draftCharacterActions.increaseIntelligenceWithRacialBonuses({ abilityBonus: abilityBonus })); break;
+                  case 'wis': store.dispatch(draftCharacterActions.increaseWisdomWithRacialBonuses({ abilityBonus: abilityBonus })); break;
+                  case 'cha': store.dispatch(draftCharacterActions.increaseCharismaWithRacialBonuses({ abilityBonus: abilityBonus })); break;
+                  default: null
+                }
               });
               if (JSON.stringify(updatedAbilityBonuses) !== JSON.stringify(abilityBonuses)) {
                 return of(draftCharacterActions.getSubraceAbilityBonusesSuccess({ abilityBonuses: updatedAbilityBonuses }));

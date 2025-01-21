@@ -16,12 +16,12 @@ import { draftCharacterActions } from '../../store/draft-character-state/draft-c
 })
 export class AbilityScoresArrayComponent implements OnInit  {
   store = inject(Store);
-  strAbilityBonus$!: Observable<{ racialBonus: number; ability_score: AbilityScore; bonus: number; }>;
-  conAbilityBonus$!: Observable<{ racialBonus: number; ability_score: AbilityScore; bonus: number; }>;
-  dexAbilityBonus$!: Observable<{ racialBonus: number; ability_score: AbilityScore; bonus: number; }>;
-  intAbilityBonus$!: Observable<{ racialBonus: number; ability_score: AbilityScore; bonus: number; }>;
-  wisAbilityBonus$!: Observable<{ racialBonus: number; ability_score: AbilityScore; bonus: number; }>;
-  chaAbilityBonus$!: Observable<{ racialBonus: number; ability_score: AbilityScore; bonus: number; }>;
+  strAbilityBonus$!: Observable<{ racialBonus: number; ability_score: AbilityScore; abilityMod: string; bonus: number; }>;
+  conAbilityBonus$!: Observable<{ racialBonus: number; ability_score: AbilityScore; abilityMod: string; bonus: number; }>;
+  dexAbilityBonus$!: Observable<{ racialBonus: number; ability_score: AbilityScore; abilityMod: string; bonus: number; }>;
+  intAbilityBonus$!: Observable<{ racialBonus: number; ability_score: AbilityScore; abilityMod: string; bonus: number; }>;
+  wisAbilityBonus$!: Observable<{ racialBonus: number; ability_score: AbilityScore; abilityMod: string; bonus: number; }>;
+  chaAbilityBonus$!: Observable<{ racialBonus: number; ability_score: AbilityScore; abilityMod: string; bonus: number; }>;
 
   availablePoints$: Observable<number> = this.store.select(selectAvailablePoints);
 
@@ -34,7 +34,8 @@ export class AbilityScoresArrayComponent implements OnInit  {
           const matchingItem = racialAbilityBonuses.find(secondItem => secondItem.ability_score.name === strAbilityBonus.ability_score.name);
           return {
             ...strAbilityBonus,
-            racialBonus: matchingItem ? matchingItem.bonus : 0
+            racialBonus: matchingItem ? matchingItem.bonus : 0,
+            abilityMod: this.getBonusCaracteristique(strAbilityBonus.bonus),
           };
       }),
     );
@@ -47,7 +48,8 @@ export class AbilityScoresArrayComponent implements OnInit  {
           const matchingItem = racialAbilityBonuses.find(secondItem => secondItem.ability_score.name === conAbilityBonus.ability_score.name);
           return {
             ...conAbilityBonus,
-            racialBonus: matchingItem ? matchingItem.bonus : 0
+            racialBonus: matchingItem ? matchingItem.bonus : 0,
+            abilityMod: this.getBonusCaracteristique(conAbilityBonus.bonus),
           };
       }),
     );
@@ -60,7 +62,8 @@ export class AbilityScoresArrayComponent implements OnInit  {
           const matchingItem = racialAbilityBonuses.find(secondItem => secondItem.ability_score.name === dexAbilityBonus.ability_score.name);
           return {
             ...dexAbilityBonus,
-            racialBonus: matchingItem ? matchingItem.bonus : 0
+            racialBonus: matchingItem ? matchingItem.bonus : 0,
+            abilityMod: this.getBonusCaracteristique(dexAbilityBonus.bonus),
           };
       }),
     );
@@ -73,7 +76,8 @@ export class AbilityScoresArrayComponent implements OnInit  {
           const matchingItem = racialAbilityBonuses.find(secondItem => secondItem.ability_score.name === intAbilityBonus.ability_score.name);
           return {
             ...intAbilityBonus,
-            racialBonus: matchingItem ? matchingItem.bonus : 0
+            racialBonus: matchingItem ? matchingItem.bonus : 0,
+            abilityMod: this.getBonusCaracteristique(intAbilityBonus.bonus),
           };
       }),
     );
@@ -86,7 +90,8 @@ export class AbilityScoresArrayComponent implements OnInit  {
           const matchingItem = racialAbilityBonuses.find(secondItem => secondItem.ability_score.name === wisAbilityBonus.ability_score.name);
           return {
             ...wisAbilityBonus,
-            racialBonus: matchingItem ? matchingItem.bonus : 0
+            racialBonus: matchingItem ? matchingItem.bonus : 0,
+            abilityMod: this.getBonusCaracteristique(wisAbilityBonus.bonus),
           };
       }),
     );
@@ -99,7 +104,8 @@ export class AbilityScoresArrayComponent implements OnInit  {
           const matchingItem = racialAbilityBonuses.find(secondItem => secondItem.ability_score.name === chaAbilityBonus.ability_score.name);
           return {
             ...chaAbilityBonus,
-            racialBonus: matchingItem ? matchingItem.bonus : 0
+            racialBonus: matchingItem ? matchingItem.bonus : 0,
+            abilityMod: this.getBonusCaracteristique(chaAbilityBonus.bonus),
           };
       }),
     );
@@ -115,6 +121,11 @@ export class AbilityScoresArrayComponent implements OnInit  {
 
   resetAvailablePoints(): void {
     this.store.dispatch(draftCharacterActions.resetAbilityPoints());
+  }
+
+  getBonusCaracteristique(score: number): string {
+    const bonus = Math.floor((score - 10) / 2);
+    return (bonus >= 0 ? `(+${bonus})` : `(${bonus})`);
   }
 
 }

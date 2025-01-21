@@ -32,5 +32,12 @@ export const draftCharacterActions = createActionGroup({
     'Increase Ability Bonus': props<{ index: string }>(),
     'Decrease Ability Bonus': props<{ index: string }>(),
     'Get Ability Bonus Failure': props<{ error: any }>(),
+
+    'Increase Strenght With Racial Bonuses': props<{ abilityBonus: AbilityBonus }>(),
+    'Increase Constitution With Racial Bonuses': props<{ abilityBonus: AbilityBonus }>(),
+    'Increase Dexterity With Racial Bonuses': props<{ abilityBonus: AbilityBonus }>(),
+    'Increase Intelligence With Racial Bonuses': props<{ abilityBonus: AbilityBonus }>(),
+    'Increase Wisdom With Racial Bonuses': props<{ abilityBonus: AbilityBonus }>(),
+    'Increase Charisma With Racial Bonuses': props<{ abilityBonus: AbilityBonus }>(),
   },
 });

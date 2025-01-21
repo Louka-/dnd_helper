@@ -3,8 +3,9 @@ import { ClassDetails } from '../../models/class.model';
 import { RaceDetails } from '../../models/race.model';
 import { AbilityBonus } from '../../models/ability-bonus.model';
 import { draftCharacterActions } from './draft-character.actions';
+import DraftCharacterStateUtils from '../../utils/draft-character-state.utils';
 
-export interface State {
+export interface DraftCharacterState {
   selectedRace: RaceDetails;
   selectedClass: ClassDetails;
   abilityBonuses: AbilityBonus[];
@@ -17,7 +18,7 @@ export interface State {
   availablePoints: number;
 };
 
-export const draftCharacterInitialState: State = {
+export const draftCharacterInitialState: DraftCharacterState = {
   selectedRace: {} as RaceDetails,
   selectedClass: {} as ClassDetails,
   abilityBonuses: [
@@ -129,7 +130,14 @@ export const draftCharacterInitialState: State = {
 
 export const draftCharacterReducer = createReducer(
   draftCharacterInitialState,
-  on(draftCharacterActions.getSelectedRace, (state) => ({ ...state })),
+  on(draftCharacterActions.getSelectedRace, (state) => ({ ...state,
+    strAbilityBonus: draftCharacterInitialState.strAbilityBonus,
+    conAbilityBonus: draftCharacterInitialState.conAbilityBonus,
+    dexAbilityBonus: draftCharacterInitialState.dexAbilityBonus,
+    intAbilityBonus: draftCharacterInitialState.intAbilityBonus,
+    wisAbilityBonus: draftCharacterInitialState.wisAbilityBonus,
+    chaAbilityBonus: draftCharacterInitialState.chaAbilityBonus,
+   })),
   on(draftCharacterActions.getSelectedRaceSuccess, (state,  {selectedRace }) => ({ ...state, selectedRace: selectedRace })),
   on(draftCharacterActions.getSelectedClass, (state) => ({ ...state })),
   on(draftCharacterActions.getSelectedClassSuccess, (state, { selectedClass }) => ({ ...state, selectedClass: selectedClass })),
@@ -140,12 +148,12 @@ export const draftCharacterReducer = createReducer(
   on(draftCharacterActions.resetAbilityPoints, (state) => ({
     ...state,
     availablePoints: draftCharacterInitialState.availablePoints,
-    strAbilityBonus: draftCharacterInitialState.strAbilityBonus,
-    conAbilityBonus: draftCharacterInitialState.conAbilityBonus,
-    dexAbilityBonus: draftCharacterInitialState.dexAbilityBonus,
-    intAbilityBonus: draftCharacterInitialState.intAbilityBonus,
-    wisAbilityBonus: draftCharacterInitialState.wisAbilityBonus,
-    chaAbilityBonus: draftCharacterInitialState.chaAbilityBonus,
+    strAbilityBonus: DraftCharacterStateUtils.getInitialStrengthWithRacialBonuses(state),
+    conAbilityBonus: DraftCharacterStateUtils.getInitialConstitutionWithRacialBonuses(state),
+    dexAbilityBonus: DraftCharacterStateUtils.getInitialDexterityWithRacialBonuses(state),
+    intAbilityBonus: DraftCharacterStateUtils.getInitialIntelligenceWithRacialBonuses(state),
+    wisAbilityBonus: DraftCharacterStateUtils.getInitialWisdomWithRacialBonuses(state),
+    chaAbilityBonus: DraftCharacterStateUtils.getInitialCharismaWithRacialBonuses(state),
   })),
   on(draftCharacterActions.increaseAbilityPoints, (state) => ({ ...state, availablePoints: state.availablePoints + 1 })),
   on(draftCharacterActions.decreaseAbilityPoints, (state) => ({ ...state, availablePoints: state.availablePoints !== 0 ? state.availablePoints - 1 : 0 })),
@@ -184,6 +192,23 @@ export const draftCharacterReducer = createReducer(
       default:
         return state;
     }
-  })
+  }),
+  on(draftCharacterActions.increaseStrenghtWithRacialBonuses, (state, {abilityBonus}) => {
+    return {...state, strAbilityBonus: { ...state.strAbilityBonus, bonus: state.strAbilityBonus.bonus + abilityBonus.bonus }}
+  }),
+  on(draftCharacterActions.increaseConstitutionWithRacialBonuses, (state, {abilityBonus}) => {
+    return {...state, conAbilityBonus: { ...state.conAbilityBonus, bonus: state.conAbilityBonus.bonus + abilityBonus.bonus }}
+  }),
+  on(draftCharacterActions.increaseDexterityWithRacialBonuses, (state, {abilityBonus}) => {
+    return {...state, dexAbilityBonus: { ...state.dexAbilityBonus, bonus: state.dexAbilityBonus.bonus + abilityBonus.bonus }}
+  }),
+  on(draftCharacterActions.increaseIntelligenceWithRacialBonuses, (state, {abilityBonus}) => {
+    return {...state, intAbilityBonus: { ...state.intAbilityBonus, bonus: state.intAbilityBonus.bonus + abilityBonus.bonus }}
+  }),
+  on(draftCharacterActions.increaseWisdomWithRacialBonuses, (state, {abilityBonus}) => {
+    return {...state, wisAbilityBonus: { ...state.wisAbilityBonus, bonus: state.wisAbilityBonus.bonus + abilityBonus.bonus }}
+  }),
+  on(draftCharacterActions.increaseCharismaWithRacialBonuses, (state, {abilityBonus}) => {
+    return {...state, chaAbilityBonus: { ...state.chaAbilityBonus, bonus: state.chaAbilityBonus.bonus + abilityBonus.bonus }}
+  }),
 );
-

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
@@ -12,42 +12,37 @@ import { draftCharacterActions } from '../../store/draft-character-state/draft-c
   templateUrl: './ability-scores-selector.component.html',
   styleUrl: './ability-scores-selector.component.scss'
 })
-export class AbilityScoresSelectorComponent implements OnInit  {
+export class AbilityScoresSelectorComponent  {
   private store = inject(Store);
   @Input() racialBonus = 0;
   @Input() abilityScore = 0;
   @Input() abilityName = '';
   @Input() abilityIndex = '';
   @Input() disableAddButton = false;
-  @Input() finalScore = 8;
+  @Input() abilityMod: string = '';
   @Output() addPointEvent = new EventEmitter();
   @Output() removePointEvent = new EventEmitter();
   minValue: number = 8;
   maxValue: number = 20;
 
-  ngOnInit(): void {
-    this.finalScore = this.abilityScore + this.racialBonus;
-  }
-
   increment(abilityIndex: string) {
-    if (this.finalScore < this.maxValue || this.disableAddButton) {
+    if (this.abilityScore < this.maxValue || this.disableAddButton) {
       this.store.dispatch(draftCharacterActions.increaseAbilityBonus({ index: abilityIndex }));
       this.abilityScore++;
       this.removePointEvent.emit();
-      this.updateFinalScore();
     }
   }
 
   decrement(abilityIndex: string) {
-    if (this.finalScore > this.minValue) {
+    if (this.abilityScore > this.minValue) {
       this.store.dispatch(draftCharacterActions.decreaseAbilityBonus({ index: abilityIndex }));
       this.abilityScore--;
       this.addPointEvent.emit();
-      this.updateFinalScore();
     }
   }
 
-  private updateFinalScore() {
-    this.finalScore = this.abilityScore + this.racialBonus;
+  getBonusCaracteristique(score: number): string {
+    const bonus = Math.floor((score - 10) / 2);
+    return (bonus >= 0 ? `(+${bonus})` : `(${bonus})`);
   }
 }
