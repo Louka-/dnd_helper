@@ -1,11 +1,72 @@
-@let abilityBonuses = abilityBonuses$ | async;
-@for (ability of abilityBonuses; track ability) {
-  {{totalPoints}}
-  <ability-scores-selector
-    (addPointEvent)="increment()"
-    (removePointEvent)="decrement()"
-    [abilityName]="ability.ability_score.name"
-    [racialBonus]="ability.bonus"
-    [disableAddButton]="!totalPoints"
-  ></ability-scores-selector>
-}
+@let strAbilityBonus = (strAbilityBonus$ | async)!;
+@let conAbilityBonus = (conAbilityBonus$ | async)!;
+@let dexAbilityBonus = (dexAbilityBonus$ | async)!;
+@let intAbilityBonus = (intAbilityBonus$ | async)!;
+@let wisAbilityBonus = (wisAbilityBonus$ | async)!;
+@let chaAbilityBonus = (chaAbilityBonus$ | async)!;
+@let availablePoints = (availablePoints$ | async)!;
+
+{{availablePoints}}
+<ability-scores-selector
+  (addPointEvent)="increment()"
+  (removePointEvent)="decrement()"
+  [abilityName]="strAbilityBonus.ability_score.name"
+  [abilityIndex]="strAbilityBonus.ability_score.index"
+  [abilityScore]="strAbilityBonus.bonus"
+  [racialBonus]="strAbilityBonus.racialBonus"
+  [abilityMod]="strAbilityBonus.abilityMod"
+  [disableAddButton]="!availablePoints"
+></ability-scores-selector>
+<ability-scores-selector
+  (addPointEvent)="increment()"
+  (removePointEvent)="decrement()"
+  [abilityName]="conAbilityBonus.ability_score.name"
+  [abilityIndex]="conAbilityBonus.ability_score.index"
+  [abilityScore]="conAbilityBonus.bonus"
+  [racialBonus]="conAbilityBonus.racialBonus"
+  [abilityMod]="conAbilityBonus.abilityMod"
+  [disableAddButton]="!availablePoints"
+></ability-scores-selector>
+<ability-scores-selector
+  (addPointEvent)="increment()"
+  (removePointEvent)="decrement()"
+  [abilityName]="dexAbilityBonus.ability_score.name"
+  [abilityIndex]="dexAbilityBonus.ability_score.index"
+  [abilityScore]="dexAbilityBonus.bonus"
+  [racialBonus]="dexAbilityBonus.racialBonus"
+  [abilityMod]="dexAbilityBonus.abilityMod"
+  [disableAddButton]="!availablePoints"
+></ability-scores-selector>
+<ability-scores-selector
+  (addPointEvent)="increment()"
+  (removePointEvent)="decrement()"
+  [abilityName]="intAbilityBonus.ability_score.name"
+  [abilityIndex]="intAbilityBonus.ability_score.index"
+  [abilityScore]="intAbilityBonus.bonus"
+  [racialBonus]="intAbilityBonus.racialBonus"
+  [abilityMod]="intAbilityBonus.abilityMod"
+  [disableAddButton]="!availablePoints"
+></ability-scores-selector>
+<ability-scores-selector
+  (addPointEvent)="increment()"
+  (removePointEvent)="decrement()"
+  [abilityName]="wisAbilityBonus.ability_score.name"
+  [abilityIndex]="wisAbilityBonus.ability_score.index"
+  [abilityScore]="wisAbilityBonus.bonus"
+  [racialBonus]="wisAbilityBonus.racialBonus"
+  [abilityMod]="wisAbilityBonus.abilityMod"
+  [disableAddButton]="!availablePoints"
+></ability-scores-selector>
+<ability-scores-selector
+  (addPointEvent)="increment()"
+  (removePointEvent)="decrement()"
+  [abilityName]="chaAbilityBonus.ability_score.name"
+  [abilityIndex]="chaAbilityBonus.ability_score.index"
+  [abilityScore]="chaAbilityBonus.bonus"
+  [racialBonus]="chaAbilityBonus.racialBonus"
+  [abilityMod]="chaAbilityBonus.abilityMod"
+  [disableAddButton]="!availablePoints"
+></ability-scores-selector>
+
+<button mat-button (click)="resetAvailablePoints()">Reset Points</button>
+

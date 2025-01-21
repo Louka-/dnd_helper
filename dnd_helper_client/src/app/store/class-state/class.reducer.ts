@@ -2,12 +2,12 @@ import { createReducer, on } from '@ngrx/store';
 import { classesActions } from './class.actions';
 import { Class, ClassDetails } from '../../models/class.model';
 
-export interface State {
+export interface ClassState {
   classes: Class[];
   classDetails: ClassDetails[];
 };
 
-export const classInitialState: State = {
+export const classInitialState: ClassState = {
   classes: [],
   classDetails: [],
 };

@@ -5,12 +5,11 @@ import { CommonModule } from '@angular/common';
 import { StepperCreatorComponent } from '../../components/stepper-creator/stepper-creator.component';
 import { RaceDescriptionComponent } from '../../components/race-description/race-description.component';
 import { RaceDetails } from '../../models/race.model';
-import { map, Observable, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ClassDetails } from '../../models/class.model';
 import { ClassDescriptionComponent } from '../../components/class-description/class-description.component';
 import { AbilityScoresArrayComponent } from '../../components/ability-scores-array/ability-scores-array.component';
 import { AbilityBonus } from '../../models/ability-bonus.model';
-import { racesActions } from '../../store/race-state/race.actions';
 
 @Component({
   selector: 'character-creator',
@@ -36,10 +35,16 @@ export class CharacterCreatorComponent {
 
   changeStep(event: number) {
     if(event > this.step) {
-      ++this.step
+      ++this.step;
+    }
+    if(event > this.step && this.step-event!=1) {
+      this.step = event;
     }
     if(event < this.step) {
-      --this.step
+      --this.step;
+    }
+    if(event < this.step && this.step-event!=-1) {
+      this.step = event;
     }
   }
 
@@ -55,10 +60,4 @@ export class CharacterCreatorComponent {
     this.abilityBonusesToDispatch$ = aB;
   }
 
-  button() {
-    this.raceToDisplay$.pipe(
-      tap((race) => console.log(race)),
-      map(race => this.store.dispatch(racesActions.getSubraceById({index: race.subraces?.[0].index as string})))
-    ).subscribe()
-  }
 }

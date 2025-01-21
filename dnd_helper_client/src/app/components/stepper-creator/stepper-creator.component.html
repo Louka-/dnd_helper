@@ -1,6 +1,12 @@
+@let raceDetails = raceDetails$ | async;
+@let classDetails = classDetails$ | async;
 <mat-stepper [linear]="false" orientation="vertical" #stepper (selectionChange)="onStepChange($event)">
   <!--race selector-->
-  <mat-step [stepControl]="firstFormGroup" label="Choose a Race">
+  <mat-step [stepControl]="firstFormGroup" label="">
+    <ng-template matStepLabel>
+      <div class="stepper-header-overlay"></div>
+      {{raceDetails ? 'Race: ' + raceDetails.name : 'Choose a Race'}}
+    </ng-template>
     <form [formGroup]="firstFormGroup">
       <race-selector (raceToDisplay)="onRaceToDisplay($event)"></race-selector>
       <div>
@@ -9,7 +15,11 @@
     </form>
   </mat-step>
   <!--class selector-->
-  <mat-step [stepControl]="secondFormGroup" label="Choose a Class">
+  <mat-step [stepControl]="secondFormGroup" label="">
+    <ng-template matStepLabel>
+      <div class="stepper-header-overlay"></div>
+      {{classDetails ? 'Class: ' + classDetails.name : 'Choose a Class'}}
+    </ng-template>
     <form [formGroup]="secondFormGroup">
       <class-selector (classToDisplay)="onClassToDisplay($event)"></class-selector>
       <div>
@@ -19,13 +29,13 @@
     </form>
   </mat-step>
   <!--background selector-->
-  <mat-step label="Choose a Background">
+  <!-- <mat-step label="Choose a Background">
     <p>Background</p>
     <div>
       <button mat-button matStepperPrevious>Back</button>
       <button mat-button matStepperNext>Next</button>
     </div>
-  </mat-step>
+  </mat-step> -->
   <!--ability scores selector-->
   <mat-step label="Ability scores and HP">
     <p>Ability scores</p>
@@ -35,13 +45,13 @@
     </div>
   </mat-step>
   <!--class capacities selector-->
-  <mat-step label="Class special skills">
+  <!-- <mat-step label="Class special skills">
     <p>Special skills</p>
     <div>
       <button mat-button matStepperPrevious>Back</button>
       <button mat-button matStepperNext>Next</button>
     </div>
-  </mat-step>
+  </mat-step> -->
   <!--proficiencies selector-->
   <mat-step label="Choose Proficiencies">
     <p>Proficiencies</p>

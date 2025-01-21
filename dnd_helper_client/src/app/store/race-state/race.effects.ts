@@ -42,6 +42,7 @@ export class RaceEffects {
       ofType(racesActions.getRaceFromStore),
       switchMap((action) => {
         store.dispatch(draftCharacterActions.getSelectedRace({selectedRace: action.raceDetails}));
+        store.dispatch(draftCharacterActions.getSubraceAbilityBonuses({abilityBonuses: draftCharacterInitialState.abilityBonuses}));
         store.dispatch(draftCharacterActions.getRaceAbilityBonuses({abilityBonuses: action.raceDetails.ability_bonuses}));
         return of(racesActions.getRaceSuccess({ raceDetails: action.raceDetails }));
       }),
@@ -51,19 +52,14 @@ export class RaceEffects {
   subraceGetOneById$ = createEffect((actions$ = inject(Actions), subraceService = inject(SubraceService), store = inject(Store)) => {
     return actions$.pipe(
       ofType(racesActions.getSubraceById),
-      switchMap(action => {
-        if(action.index) {
-          return subraceService.getSubraceById(action.index).pipe(
-            map((subraces) => {
-              store.dispatch(draftCharacterActions.getSubraceAbilityBonuses({abilityBonuses: subraces.ability_bonuses}));
-              return racesActions.getSubraceSuccess({ subraces: subraces });
+      switchMap(action =>
+        subraceService.getSubraceById(action.index).pipe(
+          map((subraces) => {
+            store.dispatch(draftCharacterActions.getSubraceAbilityBonuses({abilityBonuses: subraces.ability_bonuses}));
+            return racesActions.getSubraceSuccess({ subraces: subraces });
           }),
-          )
-        } else {
-          store.dispatch(draftCharacterActions.getSubraceAbilityBonuses({abilityBonuses: draftCharacterInitialState.abilityBonuses}));
-          return of(racesActions.getSubraceFailure({ error: 'no such subrace' }));
-        }
-      }),
+        )
+      ),
     );
   });
 }
