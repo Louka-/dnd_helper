@@ -2,6 +2,7 @@ import { createActionGroup, emptyProps, props } from '@ngrx/store';
 import { ClassDetails } from '../../models/class.model';
 import { RaceDetails } from '../../models/race.model';
 import { AbilityBonus } from '../../models/ability-bonus.model';
+import { BackgroundDetails } from '../../models/background.model';
 
 export const draftCharacterActions = createActionGroup({
   source: 'Draft Character',
@@ -13,6 +14,10 @@ export const draftCharacterActions = createActionGroup({
     'Get Selected Class': props<{ selectedClass: ClassDetails }>(),
     'Get Selected Class Success': props<{ selectedClass: ClassDetails }>(),
     'Get Selected Class Failure': props<{ error: any }>(),
+
+    'Get Selected Background': props<{ selectedBackground: BackgroundDetails }>(),
+    'Get Selected Background Success': props<{ selectedBackground: BackgroundDetails }>(),
+    'Get Selected Background Failure': props<{ error: any }>(),
 
     'Get Race Ability Bonuses': props<{ abilityBonuses: AbilityBonus[] }>(),
     'Get Race Ability Bonuses Success': props<{ abilityBonuses: AbilityBonus[] }>(),

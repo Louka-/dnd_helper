@@ -4,10 +4,12 @@ import { RaceDetails } from '../../models/race.model';
 import { AbilityBonus } from '../../models/ability-bonus.model';
 import { draftCharacterActions } from './draft-character.actions';
 import DraftCharacterStateUtils from '../../utils/draft-character-state.utils';
+import { BackgroundDetails } from '../../models/background.model';
 
 export interface DraftCharacterState {
   selectedRace: RaceDetails;
   selectedClass: ClassDetails;
+  selectedBackground: BackgroundDetails;
   abilityBonuses: AbilityBonus[];
   strAbilityBonus: AbilityBonus;
   conAbilityBonus: AbilityBonus;
@@ -21,6 +23,7 @@ export interface DraftCharacterState {
 export const draftCharacterInitialState: DraftCharacterState = {
   selectedRace: {} as RaceDetails,
   selectedClass: {} as ClassDetails,
+  selectedBackground: {} as BackgroundDetails,
   abilityBonuses: [
     {
       ability_score: {
@@ -141,6 +144,8 @@ export const draftCharacterReducer = createReducer(
   on(draftCharacterActions.getSelectedRaceSuccess, (state,  {selectedRace }) => ({ ...state, selectedRace: selectedRace })),
   on(draftCharacterActions.getSelectedClass, (state) => ({ ...state })),
   on(draftCharacterActions.getSelectedClassSuccess, (state, { selectedClass }) => ({ ...state, selectedClass: selectedClass })),
+  on(draftCharacterActions.getSelectedBackground, (state) => ({ ...state })),
+  on(draftCharacterActions.getSelectedBackgroundSuccess, (state, { selectedBackground }) => ({ ...state, selectedBackground: selectedBackground })),
   on(draftCharacterActions.getRaceAbilityBonuses, (state) => ({ ...state })),
   on(draftCharacterActions.getRaceAbilityBonusesSuccess, (state, { abilityBonuses }) => ({ ...state, abilityBonuses: abilityBonuses })),
   on(draftCharacterActions.getSubraceAbilityBonuses, (state) => ({ ...state })),

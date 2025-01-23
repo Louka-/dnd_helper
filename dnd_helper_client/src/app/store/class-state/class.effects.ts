@@ -10,7 +10,7 @@ import { draftCharacterActions } from '../draft-character-state/draft-character.
 @Injectable()
 export class ClassEffects {
 
-  racesGetAll$ = createEffect(
+  classesGetAll$ = createEffect(
     (actions$ = inject(Actions), classService = inject(ClassService)) => {
       return actions$.pipe(
         ofType(classesActions.getAllClasses),

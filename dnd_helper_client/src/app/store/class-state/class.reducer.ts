@@ -20,7 +20,7 @@ export const classReducer = createReducer(
   on(classesActions.getClassFromStore, (state) => ({ ...state })),
   on(classesActions.getClassSuccess, (state, { classDetails }) => ({
     ...state, classDetails:
-      (state.classDetails.some(storedRace => storedRace.index === classDetails.index) && state.classDetails.length !== 0)
+      (state.classDetails.some(storedClass => storedClass.index === classDetails.index) && state.classDetails.length !== 0)
         ? state.classDetails
         : [...state.classDetails, classDetails]
   })),

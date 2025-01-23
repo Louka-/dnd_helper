@@ -1,0 +1,10 @@
+@let backgrounds = backgrounds$ | async;
+
+<mat-form-field>
+  <mat-label>Backgrounds</mat-label>
+  <mat-select [(value)]="selectedBackground" (selectionChange)="getBackgroundById()">
+    @for (background of backgrounds; track background) {
+    <mat-option [value]="background.index">{{background.name}}</mat-option>
+    }
+  </mat-select>
+</mat-form-field>

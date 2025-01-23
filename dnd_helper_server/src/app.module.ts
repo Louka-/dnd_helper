@@ -8,6 +8,7 @@ import { RacesModule } from './modules/races.module';
 import { ClassesModule } from './modules/classes.module';
 import { SubracesModule } from './modules/subraces.module';
 import { CharactersModule } from './modules/characters.module';
+import { BackgroundsModule } from './modules/backgrounds.module';
 
 dotenv.config();
 
@@ -33,6 +34,7 @@ dotenv.config();
     SubracesModule,
     UsersModule,
     CharactersModule,
+    BackgroundsModule,
     MulterModule.register({
       dest: './files',
     })

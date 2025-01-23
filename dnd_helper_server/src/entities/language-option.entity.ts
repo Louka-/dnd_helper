@@ -10,5 +10,8 @@ export class LanguageOption {
   choose: number;
 
   @Column()
-  options: Language[];
+  options?: Language[];
+
+  @Column()
+  option?: string;
 }
