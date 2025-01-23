@@ -6,6 +6,8 @@
       (step)="changeStep($event)"
       (raceToDisplay)="displayRaceDetails($event)"
       (classToDisplay)="displayClassDetails($event)"
+      (classToDisplay)="displayClassDetails($event)"
+      (backgroundToDisplay)="displayBackgroundDetails($event)"
     ></stepper-creator>
   </div>
   <div class="details-container">
@@ -18,31 +20,30 @@
       <class-description [classDetails$]="classToDisplay$"></class-description>
     </div>
     <!--background description-->
-    <!-- <div *ngIf="step === 2">
-      <p>Background description</p>
-      <p>Some Background description</p>
-    </div> -->
-    <!--ability scores array-->
     <div *ngIf="step === 2">
+      <background-description [backgroundDetails$]="backgroundToDisplay$"></background-description>
+    </div>
+    <!--ability scores array-->
+    <div *ngIf="step === 3">
       <ability-scores-array></ability-scores-array>
     </div>
     <!--Proficiencies choices-->
-    <div *ngIf="step === 3">
+    <div *ngIf="step === 4">
       <p>Proficiencies choices</p>
       <p>Choose Proficiencies</p>
     </div>
     <!--Equipment choices-->
-    <div *ngIf="step === 4">
+    <div *ngIf="step === 5">
       <p>Equipment choices</p>
       <p>Choose Equipment</p>
     </div>
     <!--spells choices-->
-    <div *ngIf="step === 5">
+    <div *ngIf="step === 6">
       <p>Spells choices</p>
       <p>Choose known spells</p>
     </div>
     <!--character inputs-->
-    <div *ngIf="step === 6">
+    <div *ngIf="step === 7">
       <p>Character description</p>
       <p>Choose a name, age, description...</p>
     </div>

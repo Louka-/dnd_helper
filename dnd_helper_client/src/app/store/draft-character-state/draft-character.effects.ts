@@ -29,6 +29,15 @@ export class DraftCharacterEffects {
     },
   );
 
+  backgroundGetSelected$ = createEffect(
+    (actions$ = inject(Actions)) => {
+      return actions$.pipe(
+        ofType(draftCharacterActions.getSelectedBackground),
+        map((b) => draftCharacterActions.getSelectedBackgroundSuccess({ selectedBackground: b.selectedBackground }))
+      );
+    },
+  );
+
   raceAbilityBonusesGet$ = createEffect(
     (actions$ = inject(Actions), store = inject(Store)) => {
       return actions$.pipe(

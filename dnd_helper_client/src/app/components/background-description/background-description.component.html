@@ -1,0 +1,12 @@
+@let backgroundDetails = backgroundDetails$ | async;
+<p>
+  {{backgroundDetails?.name}}
+</p>
+<div>
+  @for(equipment of backgroundDetails?.starting_equipment; track equipment) {
+    {{equipment.name}}
+  }
+  @for(proficiency of backgroundDetails?.starting_proficiencies; track proficiency) {
+    {{proficiency.name}}
+  }
+</div>

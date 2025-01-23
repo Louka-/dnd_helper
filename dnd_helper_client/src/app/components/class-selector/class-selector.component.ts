@@ -32,10 +32,10 @@ export class ClassSelectorComponent implements OnInit {
     }).pipe(
       take(1),
       map(({classDetails, c}) => {
-        const isAvailableCurrentRace = c && classDetails.some(storedRaces =>  storedRaces.index === this.selectedClass);
-        const currentRace = classDetails.find(storedRaces =>  storedRaces.index === this.selectedClass);
-        if(isAvailableCurrentRace) {
-          this.store.dispatch(classesActions.getClassFromStore({ classDetails: currentRace as ClassDetails }),
+        const isAvailableCurrentClass = c && classDetails.some(storedClasses =>  storedClasses.index === this.selectedClass);
+        const currentClass = classDetails.find(storedClasses =>  storedClasses.index === this.selectedClass);
+        if(isAvailableCurrentClass) {
+          this.store.dispatch(classesActions.getClassFromStore({ classDetails: currentClass as ClassDetails }),
         )
       } else {
           this.store.dispatch(classesActions.getClassByIdFromApi({ index: this.selectedClass }));

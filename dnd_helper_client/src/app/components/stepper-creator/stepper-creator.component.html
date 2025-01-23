@@ -1,44 +1,44 @@
 @let raceDetails = raceDetails$ | async;
 @let classDetails = classDetails$ | async;
+@let backgroundDetails = backgroundDetails$ | async;
 <mat-stepper [linear]="false" orientation="vertical" #stepper (selectionChange)="onStepChange($event)">
   <!--race selector-->
-  <mat-step [stepControl]="firstFormGroup" label="">
+  <mat-step>
     <ng-template matStepLabel>
       <div class="stepper-header-overlay"></div>
       {{raceDetails ? 'Race: ' + raceDetails.name : 'Choose a Race'}}
     </ng-template>
-    <form [formGroup]="firstFormGroup">
-      <race-selector (raceToDisplay)="onRaceToDisplay($event)"></race-selector>
-      <div>
-        <button mat-button matStepperNext>Next</button>
-      </div>
-    </form>
+    <race-selector (raceToDisplay)="onRaceToDisplay($event)"></race-selector>
+    <div>
+      <button mat-button matStepperNext>Next</button>
+    </div>
   </mat-step>
   <!--class selector-->
-  <mat-step [stepControl]="secondFormGroup" label="">
+  <mat-step>
     <ng-template matStepLabel>
       <div class="stepper-header-overlay"></div>
       {{classDetails ? 'Class: ' + classDetails.name : 'Choose a Class'}}
     </ng-template>
-    <form [formGroup]="secondFormGroup">
-      <class-selector (classToDisplay)="onClassToDisplay($event)"></class-selector>
-      <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
-      </div>
-    </form>
-  </mat-step>
-  <!--background selector-->
-  <!-- <mat-step label="Choose a Background">
-    <p>Background</p>
+    <class-selector (classToDisplay)="onClassToDisplay($event)"></class-selector>
     <div>
       <button mat-button matStepperPrevious>Back</button>
       <button mat-button matStepperNext>Next</button>
     </div>
-  </mat-step> -->
+  </mat-step>
+  <!--background selector-->
+  <mat-step label="Choose a Background">
+    <ng-template matStepLabel>
+      <div class="stepper-header-overlay"></div>
+      {{backgroundDetails ? 'Background: ' + backgroundDetails.name : 'Choose a Background'}}
+    </ng-template>
+    <background-selector (backgroundToDisplay)="onBackgroundToDisplay($event)"></background-selector>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
   <!--ability scores selector-->
   <mat-step label="Ability scores and HP">
-    <p>Ability scores</p>
     <div>
       <button mat-button matStepperPrevious>Back</button>
       <button mat-button matStepperNext>Next</button>

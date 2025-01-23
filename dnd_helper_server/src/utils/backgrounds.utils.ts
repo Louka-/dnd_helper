@@ -1,19 +1,13 @@
-import { Class } from "src/entities/class.entity";
+import { Background } from "src/entities/background.entity";
 import { EquipmentChoice } from "src/entities/equipment-choice.entity";
 import { Equipment } from "src/entities/equipment.entity";
-import { ProficienciesOption } from "src/entities/proficiencies-option.entity";
+import { LanguageOption } from "src/entities/language-option.entity";
+import { Language } from "src/entities/language.entity";
+import { Proficiency } from "src/entities/proficiency.entity";
 
-export default class ClassesUtils {
-  static mapProficiencyChoicesFromApi(data: any): ProficienciesOption[] {
-    if (data) {
-      return data.map(element => (
-        {
-          description: element.desc,
-          choose: element.choose,
-          options: element.from.options.map(el => (el.item))
-        }));
-    }
-    return [];
+export default class BackgroundsUtils {
+  static mapStartingProficienciesFromApi(data: any): Proficiency[] {
+    return data.starting_proficiencies ?? [] as Proficiency[]
   }
 
   static mapStartingEquipmentFromApi(data: any): Equipment[] {
@@ -28,7 +22,7 @@ export default class ClassesUtils {
     return [];
   }
 
-  static mapStartingEquipmentOptionsFromApi(data: any): EquipmentChoice[] {
+static mapStartingEquipmentOptionsFromApi(data: any): EquipmentChoice[] {
     if (data) {
       return data.map(element => ({
         description: element.desc,
@@ -91,15 +85,33 @@ export default class ClassesUtils {
     return [];
   }
 
-  static mapClassFromApi(data: any): Class {
+  static mapLanguagesFromApi(data: any): Language[] {
+    return data.map(element => ({
+      index: element.item.index,
+      name: element.item.name,
+      url: element.item.url
+    }))
+  }
+
+  static mapLanguageOptionFromApi(data: any): LanguageOption {
+    if (data.language_options) {
+      return {
+        choose: data.language_options.choose,
+        // Voir les différentes options sur le livre de règles pour une future implémentation
+        option: 'languages'
+      }
+    }
+  }
+
+  static mapBackgroundFromApi(data: any): Background {
     return {
-      ...data,
-      proficiency_choices: this.mapProficiencyChoicesFromApi(data.proficiency_choices),
+      index: data.index,
+      name: data.name,
+      language_options: this.mapLanguageOptionFromApi(data),
+      starting_proficiencies: this.mapStartingProficienciesFromApi(data),
       starting_equipment: this.mapStartingEquipmentFromApi(data.starting_equipment),
       starting_equipment_options: this.mapStartingEquipmentOptionsFromApi(data.starting_equipment_options),
-      //TODO to map after later implementation
-      subclasses: null,
-      multi_classing: null,
+      url: data.url,
     }
   }
 }

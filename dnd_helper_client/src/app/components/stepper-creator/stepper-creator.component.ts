@@ -1,6 +1,6 @@
-import { Component, EventEmitter, inject, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { MatStepperModule } from '@angular/material/stepper';
-import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -11,6 +11,8 @@ import { Observable } from 'rxjs';
 import { RaceDetails } from '../../models/race.model';
 import { ClassDetails } from '../../models/class.model';
 import { CommonModule } from '@angular/common';
+import { BackgroundDetails } from '../../models/background.model';
+import { BackgroundSelectorComponent } from '../background-selector/background-selector.component';
 
 @Component({
   selector: 'stepper-creator',
@@ -25,6 +27,7 @@ import { CommonModule } from '@angular/common';
     MatInputModule,
     RaceSelectorComponent,
     ClassSelectorComponent,
+    BackgroundSelectorComponent,
   ],
   templateUrl: './stepper-creator.component.html',
   styleUrl: './stepper-creator.component.scss'
@@ -33,19 +36,11 @@ export class StepperCreatorComponent  {
   @Output('step') step = new EventEmitter<number>();
   @Output('raceToDisplay') raceToDisplay = new EventEmitter<Observable<RaceDetails>>();
   @Output('classToDisplay') classToDisplay = new EventEmitter<Observable<ClassDetails>>();
-  raceDetails$!: Observable<RaceDetails>
-  classDetails$!: Observable<ClassDetails>
+  @Output('backgroundToDisplay') backgroundToDisplay = new EventEmitter<Observable<BackgroundDetails>>();
+  raceDetails$!: Observable<RaceDetails>;
+  classDetails$!: Observable<ClassDetails>;
+  backgroundDetails$!: Observable<BackgroundDetails>;
   currentStep: number = 0;
-
-  private _formBuilder = inject(FormBuilder);
-
-  //characterFormBuilder
-  firstFormGroup = this._formBuilder.group({
-    firstCtrl: ['', Validators.required],
-  });
-  secondFormGroup = this._formBuilder.group({
-    secondCtrl: ['', Validators.required],
-  });
 
   onStepChange(event: StepperSelectionEvent): void {
     this.currentStep = event.selectedIndex;
@@ -60,5 +55,10 @@ export class StepperCreatorComponent  {
   onClassToDisplay(c: Observable<ClassDetails>): void {
     this.classDetails$ = c;
     this.classToDisplay.emit(c);
+  }
+
+  onBackgroundToDisplay(b: Observable<BackgroundDetails>): void {
+    this.backgroundDetails$ = b;
+    this.backgroundToDisplay.emit(b);
   }
 }

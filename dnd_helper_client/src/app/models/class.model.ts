@@ -1,10 +1,9 @@
 import { AbilityScore } from "./ability-bonus.model";
-import { EquipmentChoice } from "./equipment-choice.model";
-import { Equipment } from "./equipment.model";
-import { Language } from "./language.model";
+import { Equipment, EquipmentChoice } from "./equipment.model";
+// import { Language } from "./language.model";
 import { Proficiency, ProficienciesChoice } from "./proficiency.model";
 import { Spellcasting } from "./spellcasting.model";
-import { Trait } from "./trait.model";
+// import { Trait } from "./trait.model";
 
 export interface Class {
   index: string;

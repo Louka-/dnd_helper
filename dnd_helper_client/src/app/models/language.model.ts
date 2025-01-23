@@ -3,3 +3,9 @@ export interface Language {
   name: string;
   url: string;
 }
+
+export interface LanguageChoice {
+  id?: string;
+  choose: number;
+  options: Language[];
+}

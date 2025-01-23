@@ -1,69 +1,54 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { ClassDetails } from '../../models/class.model';
-import { AbilityBonus } from '../../models/ability-bonus.model';
-import { RaceDetails } from '../../models/race.model';
+import { DraftCharacterState } from './draft-character.reducer';
 
-export interface DraftCharacterStateModel {
-  selectedRace: RaceDetails;
-  selectedClass: ClassDetails;
-  abilityBonuses: AbilityBonus[];
-  strAbilityBonus: AbilityBonus;
-  conAbilityBonus: AbilityBonus;
-  dexAbilityBonus: AbilityBonus;
-  intAbilityBonus: AbilityBonus;
-  wisAbilityBonus: AbilityBonus;
-  chaAbilityBonus: AbilityBonus;
-  availablePoints: number;
-}
-
-export const selectDraftCharacterState = createFeatureSelector<DraftCharacterStateModel>('draftCharacter');
+export const selectDraftCharacterState = createFeatureSelector<DraftCharacterState>('draftCharacter');
 export const selectSelectedRace = createSelector(
   selectDraftCharacterState,
-  (state: DraftCharacterStateModel) => state.selectedRace
+  (state: DraftCharacterState) => state.selectedRace
 );
 
 export const selectSelectedClass = createSelector(
   selectDraftCharacterState,
-  (state: DraftCharacterStateModel) => state.selectedClass
+  (state: DraftCharacterState) => state.selectedClass
 );
 
 export const selectCurrentAbilityBonuses = createSelector(
   selectDraftCharacterState,
-  (state: DraftCharacterStateModel) => state.abilityBonuses
+  (state: DraftCharacterState) => state.abilityBonuses
 );
 
 export const selectStrAbilityBonus = createSelector(
   selectDraftCharacterState,
-  (state: DraftCharacterStateModel) => state.strAbilityBonus,
+  (state: DraftCharacterState) => state.strAbilityBonus,
 );
 
 export const selectConAbilityBonus = createSelector(
   selectDraftCharacterState,
-  (state: DraftCharacterStateModel) => state.conAbilityBonus,
+  (state: DraftCharacterState) => state.conAbilityBonus,
 );
 
 export const selectDexAbilityBonus = createSelector(
   selectDraftCharacterState,
-  (state: DraftCharacterStateModel) => state.dexAbilityBonus,
+  (state: DraftCharacterState) => state.dexAbilityBonus,
 );
 
 export const selectIntAbilityBonus = createSelector(
   selectDraftCharacterState,
-  (state: DraftCharacterStateModel) => state.intAbilityBonus,
+  (state: DraftCharacterState) => state.intAbilityBonus,
 );
 
 export const selectWisAbilityBonus = createSelector(
   selectDraftCharacterState,
-  (state: DraftCharacterStateModel) => state.wisAbilityBonus,
+  (state: DraftCharacterState) => state.wisAbilityBonus,
 );
 
 export const selectChaAbilityBonus = createSelector(
   selectDraftCharacterState,
-  (state: DraftCharacterStateModel) => state.chaAbilityBonus,
+  (state: DraftCharacterState) => state.chaAbilityBonus,
 );
 
 export const selectAvailablePoints = createSelector(
   selectDraftCharacterState,
-  (state: DraftCharacterStateModel) => state.availablePoints
+  (state: DraftCharacterState) => state.availablePoints
 );
 
