@@ -6,7 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
+    "test": "jest --config jest.config.js",
     "serve:ssr:dnd_helper_client": "node dist/dnd_helper_client/server/server.mjs"
   },
   "private": true,
@@ -28,9 +28,10 @@
     "@ngrx/store": "^19.0.0",
     "@ngrx/store-devtools": "^19.0.0",
     "express": "^4.18.2",
+    "jest-marbles": "^3.1.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
-    "zone.js": "~0.15.0"
+    "zone.js": "^0.15.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^19.0.6",
@@ -38,14 +39,11 @@
     "@angular/compiler-cli": "^19.0.0",
     "@ngrx/schematics": "^19.0.0",
     "@types/express": "^4.17.17",
-    "@types/jasmine": "~5.1.0",
+    "@types/jest": "^29.5.14",
     "@types/node": "^18.18.0",
-    "jasmine-core": "~5.4.0",
-    "karma": "~6.4.0",
-    "karma-chrome-launcher": "~3.2.0",
-    "karma-coverage": "~2.2.0",
-    "karma-jasmine": "~5.1.0",
-    "karma-jasmine-html-reporter": "~2.1.0",
+    "jest": "^29.7.0",
+    "jest-preset-angular": "^14.5.1",
+    "ng-mocks": "^14.13.2",
     "typescript": "~5.6.2"
   }
 }

@@ -1,19 +1,26 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RaceSelectorComponent } from './race-selector.component';
+import { MockBuilder, MockRender, ngMocks } from 'ng-mocks';
+import { provideMockStore } from '@ngrx/store/testing';
 
 describe('RaceSelectorComponent', () => {
   let component: RaceSelectorComponent;
   let fixture: ComponentFixture<RaceSelectorComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [RaceSelectorComponent]
-    })
-    .compileComponents();
+  beforeEach(() =>
+    MockBuilder(RaceSelectorComponent).provide(
+      provideMockStore({
+        initialState: {},
+      }),
+    )
+  );
 
-    fixture = TestBed.createComponent(RaceSelectorComponent);
-    component = fixture.componentInstance;
+  beforeEach(() => {
+    fixture = MockRender(RaceSelectorComponent);
+    component = ngMocks.findInstance(
+      RaceSelectorComponent
+    );
     fixture.detectChanges();
   });
 

@@ -31,7 +31,11 @@ export class AbilityScoresArrayComponent implements OnInit  {
       strAbilityBonus: this.store.select(selectStrAbilityBonus),
     }).pipe(
       map(({racialAbilityBonuses, strAbilityBonus}) => {
-          const matchingItem = racialAbilityBonuses.find(secondItem => secondItem.ability_score.name === strAbilityBonus.ability_score.name);
+          const matchingItem = racialAbilityBonuses.find(secondItem => {
+            console.log('secondItem', secondItem)
+            console.log('strAbilityBonus', strAbilityBonus)
+            secondItem.ability_score.name === strAbilityBonus.ability_score.name
+          });
           return {
             ...strAbilityBonus,
             racialBonus: matchingItem ? matchingItem.bonus : 0,

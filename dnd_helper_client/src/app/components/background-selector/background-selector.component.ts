@@ -26,18 +26,22 @@ export class BackgroundSelectorComponent implements OnInit {
   }
 
   getBackgroundById(): void {
+    console.log('getBackgroundById called');
     combineLatest({
       backgroundDetails: this.store.select(selectBackgroundDetails),
       b: this.store.select(selectBackgroundById(this.selectedBackground))
     }).pipe(
       take(1),
       map(({backgroundDetails, b}) => {
+        console.log('combineLatest results:', { backgroundDetails, b });
         const isAvailableCurrentBackground = b && backgroundDetails.some(storedBackgrounds =>  storedBackgrounds.index === this.selectedBackground);
         const currentBackground = backgroundDetails.find(storedBackgrounds =>  storedBackgrounds.index === this.selectedBackground);
         if(isAvailableCurrentBackground) {
+          console.log('Background available in store:', currentBackground);
           this.store.dispatch(backgroundsActions.getBackgroundFromStore({ backgroundDetails: currentBackground as BackgroundDetails }),
         )
       } else {
+        console.log('Background not available in store, fetching from API');
           this.store.dispatch(backgroundsActions.getBackgroundByIdFromApi({ index: this.selectedBackground }));
         }
       })

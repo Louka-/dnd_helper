@@ -6,7 +6,6 @@ import { EMPTY, of } from 'rxjs';
 import { draftCharacterActions } from './draft-character.actions';
 import { draftCharacterInitialState } from './draft-character.reducer';
 import { selectCurrentAbilityBonuses } from './draft-character.selectors';
-import { AbilityBonus } from '../../models/ability-bonus.model';
 
 @Injectable()
 export class DraftCharacterEffects {
@@ -44,8 +43,8 @@ export class DraftCharacterEffects {
         ofType(draftCharacterActions.getRaceAbilityBonuses),
         map((action) => {
           const updatedAbilityBonuses = draftCharacterInitialState.abilityBonuses.map(item => {
-          const updatedItem = action.abilityBonuses.find(updated => updated.ability_score.index === item.ability_score.index);
-          return updatedItem ? updatedItem : item;
+            const updatedItem = action.abilityBonuses.find(updated => updated.ability_score.index === item.ability_score.index);
+            return updatedItem ? updatedItem : item;
         });
           action.abilityBonuses.map(abilityBonus => {
             switch(abilityBonus.ability_score.index) {

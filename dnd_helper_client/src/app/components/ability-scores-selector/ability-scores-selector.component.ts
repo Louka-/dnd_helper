@@ -40,9 +40,4 @@ export class AbilityScoresSelectorComponent  {
       this.addPointEvent.emit();
     }
   }
-
-  getBonusCaracteristique(score: number): string {
-    const bonus = Math.floor((score - 10) / 2);
-    return (bonus >= 0 ? `(+${bonus})` : `(${bonus})`);
-  }
 }

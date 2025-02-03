@@ -25,10 +25,6 @@ export const draftCharacterActions = createActionGroup({
     'Get Subrace Ability Bonuses Success': props<{ abilityBonuses: AbilityBonus[] }>(),
     'Get Ability Bonuses Failure': props<{ error: any }>(),
 
-    // 'Get Ability Scores': emptyProps(),
-    // 'Get Ability Scores Success': emptyProps(),
-    // 'Get Ability Scores Failure': props<{ error: any }>(),
-
     'Increase Ability Points': emptyProps(),
     'Decrease Ability Points': emptyProps(),
     'Reset Ability Points': emptyProps(),

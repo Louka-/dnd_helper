@@ -24,7 +24,7 @@ export interface ClassDetails extends Class {
   //TODO set as null for now, later implementation
   subclasses?: string;
   multi_classing?: string;
-  spellcasting: Spellcasting;
+  spellcasting?: Spellcasting;
   spells: string;
   url: string;
 }
